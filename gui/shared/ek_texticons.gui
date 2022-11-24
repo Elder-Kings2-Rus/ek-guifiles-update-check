@@ -1,0 +1,28 @@
+﻿texticon = {
+	icon = ardor_icon
+	iconsize = {
+		texture = "gfx/interface/patron_window/icon_ardor.dds"	
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+texticon = {
+	icon = skill_arcana_icon
+	iconsize = {
+		texture = "gfx/interface/icons/icon_arcana.dds"	
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+texticon = {
+	icon = magicka_icon
+	iconsize = {
+		texture = "gfx/interface/icons/icon_magicka.dds"	
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+

@@ -1,0 +1,30 @@
+### EK icons
+texticon = {
+	icon = domain_icon
+	iconsize = {
+		texture = "gfx/interface/icons/icon_domain.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = vassal_icon
+	iconsize = {
+		texture = "gfx/interface/icons/icon_vassal.dds"
+		size = { 30 30 }
+		offset = { 0 3 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = liege_icon
+	iconsize = {
+		texture = "gfx/interface/icons/icon_liege.dds"
+		size = { 30 30 }
+		offset = { 0 3 }
+		fontsize = 16
+	}
+}
