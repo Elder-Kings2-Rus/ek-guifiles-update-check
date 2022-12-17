@@ -1912,10 +1912,18 @@ window = {
 					}
 				}
 
-				blockoverride "scrollbox_empty" {
-					text = NO_PATRONS
+				vbox = {
 					visible = "[IsDataModelEmpty(FaithWindow.GetFaith.MakeScope.GetList('faith_patrons'))]"
-					layoutpolicy_vertical = fixed
+					layoutpolicy_horizontal = expanding
+					text_multi = {
+						text = "NO_PATRONS"
+						align = center
+						max_width = 500
+						autoresize = yes
+						using = Font_Size_Medium
+					}
+					
+					expand = {}
 				}
 
 				blockoverride "scrollbox_content"

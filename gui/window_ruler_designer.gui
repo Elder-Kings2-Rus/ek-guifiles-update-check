@@ -41,6 +41,8 @@ window = {
 		on_start = "[VariableSystem.Set( 'ek_ruler_designer_open', 'true')]"
 
 		on_start = "[PdxGuiTriggerAllAnimations( 'ek_ruler_designer_checks' )]"
+		on_finish = "[VariableSystem.Set( 'ek_arcana', '0' )]"
+
 	}
 
 	#These get the character race and ethnicity if one is not selected
@@ -98,10 +100,13 @@ window = {
 
 	state = {
 		# Enable certain variables for set ethnicities, not pretty, but best I could come up with so we don't have to do this in every gene loc.
-		name = name = state_null
+		name = state_null
 
 		#Tusks check
 		on_finish = "[VariableSystem.Set( 'ek_tusks_enabled', Select_CString( Or(EqualTo_string( RulerDesignerWindow.GetEthnicity.GetName, Localize('race_orsimer_name') ), Or(EqualTo_string( RulerDesignerWindow.GetEthnicity.GetName, Localize('race_orsimer_wood_name') ),Or(EqualTo_string( RulerDesignerWindow.GetEthnicity.GetName, Localize('race_goblin_green_name') ), Or(EqualTo_string( RulerDesignerWindow.GetEthnicity.GetName, Localize('race_goblin_yellow_name') ), Or(EqualTo_string( RulerDesignerWindow.GetEthnicity.GetName, Localize('race_goblin_riekr_name') ), Or(EqualTo_string( RulerDesignerWindow.GetEthnicity.GetName, Localize('race_goblin_riekling_name') ), EqualTo_string( RulerDesignerWindow.GetEthnicity.GetName, Localize('race_orsimer_iron_name') ) ) ) ) ) ) ), 'true', 'false' ) )]"
+	
+		
+	
 	}
 
 
@@ -169,663 +174,729 @@ window = {
 				size = { 520 0 }
 
 				vbox = {
-					name = "left_panel"
-					margin_right = 15
-
-					vbox = {
-						layoutpolicy_horizontal = expanding
-						spacing = 20
-
-						# EK DEBUG
-						# ek_debug_vbox = {
-						# 	visible = "[InDebugMode]"
-						# }
-
-						hbox = {
-							name = "sex_customization"
-							layoutpolicy_horizontal = expanding
-							spacing = 40
-
-							vbox = {
-								name = "sex"
-								layoutpolicy_vertical = expanding
-
-								vbox = {
-									layoutpolicy_horizontal = expanding
-
-									hbox = {
-										layoutpolicy_horizontal = expanding
-
-										text_label_left = {
-											text = "RULER_DESIGNER_SEX"
-											max_width = 120
-											autoresize = yes
-											using = Font_Size_Medium
-										}
-									}
-								}
-
-								hbox = {
-									layoutpolicy_horizontal = expanding
-									margin_top = 3
-									spacing = 5
-
-									button_male = {
-										name = "male"
-										down = "[Not( RulerDesignerWindow.IsFemale )]"
-										alwaystransparent = "[Not( RulerDesignerWindow.IsFemale )]"
-										onclick = "[RulerDesignerWindow.SetIsFemale( '(bool)no' )]"
-										onclick = "[VariableSystem.Set( 'ek_gender', 'male' )]"
-										tooltip = RULER_DESIGNER_SET_IS_MALE
-										using = tooltip_se
-
-										onclick = "[PdxGuiTriggerAllAnimations('ruler_designer_portrait_refresh')]"
-									}
-
-									button_female = {
-										name = "female"
-										down = "[RulerDesignerWindow.IsFemale]"
-										alwaystransparent = "[RulerDesignerWindow.IsFemale]"
-										onclick = "[RulerDesignerWindow.SetIsFemale( '(bool)yes' )]"
-										onclick = "[VariableSystem.Set( 'ek_gender', 'female' )]"
-										tooltip = RULER_DESIGNER_SET_IS_FEMALE
-										using = tooltip_se
-
-										onclick = "[PdxGuiTriggerAllAnimations('ruler_designer_portrait_refresh')]"
-									}
-
-									expand = {}
-								}
-
-								expand = {}
-							}
-
-
-							vbox = {
-								name = "sexuality"
-								layoutpolicy_vertical = expanding
-
-
-								vbox = {
-									layoutpolicy_horizontal = expanding
-
-									hbox = {
-										layoutpolicy_horizontal = expanding
-
-										text_label_left = {
-											text = "RULER_DESIGNER_SEXUALITY"
-											max_width = 250
-											autoresize = yes
-											using = Font_Size_Medium
-										}
-									}
-								}
-
-
-								text_single = {
-									margin_top = 3
-									text = "RULER_DESIGNER_SEXUALITY_NOT_AVAILABLE_INFO"
-									visible = "[Not(RulerDesignerWindow.CanChangeSexuality)]"
-								}
-
-
-
-								hbox = {
-									visible = "[RulerDesignerWindow.CanChangeSexuality]"
-									layoutpolicy_horizontal = expanding
-
-									margin_top = 3
-									spacing = 5
-
-									button_randomize = {
-										name = "random"
-										down = "[RulerDesignerWindow.HasSexuality( 'none' )]"
-										alwaystransparent = "[RulerDesignerWindow.HasSexuality( 'none' )]"
-										onclick = "[RulerDesignerWindow.SetSexuality( 'none' )]"
-										tooltip = RULER_DESIGNER_SET_SEXUALITY_RANDOM
-										using = tooltip_se
-									}
-
-									button_heterosexual = {
-										name = "heterosexual"
-										down = "[RulerDesignerWindow.HasSexuality( 'heterosexual' )]"
-										alwaystransparent = "[RulerDesignerWindow.HasSexuality( 'heterosexual' )]"
-										onclick = "[RulerDesignerWindow.SetSexuality( 'heterosexual' )]"
-										tooltip = RULER_DESIGNER_SET_SEXUALITY_HETEROSEXUAL
-										using = tooltip_se
-									}
-
-									button_homosexual_female = {
-										name = "homosexual_female"
-										visible = "[RulerDesignerWindow.IsFemale]"
-										down = "[RulerDesignerWindow.HasSexuality( 'homosexual' )]"
-										alwaystransparent = "[RulerDesignerWindow.HasSexuality( 'homosexual' )]"
-										onclick = "[RulerDesignerWindow.SetSexuality( 'homosexual' )]"
-										tooltip = RULER_DESIGNER_SET_SEXUALITY_HOMOSEXUAL
-										using = tooltip_se
-									}
-
-									button_homosexual_male = {
-										name = "homosexual_male"
-										visible = "[Not( RulerDesignerWindow.IsFemale )]"
-										down = "[RulerDesignerWindow.HasSexuality( 'homosexual' )]"
-										alwaystransparent = "[RulerDesignerWindow.HasSexuality( 'homosexual' )]"
-										onclick = "[RulerDesignerWindow.SetSexuality( 'homosexual' )]"
-										tooltip = RULER_DESIGNER_SET_SEXUALITY_HOMOSEXUAL
-										using = tooltip_se
-									}
-
-									button_bisexual_female = {
-										name = "bisexual_female"
-										visible = "[RulerDesignerWindow.IsFemale]"
-										down = "[RulerDesignerWindow.HasSexuality( 'bisexual' )]"
-										alwaystransparent = "[RulerDesignerWindow.HasSexuality( 'bisexual' )]"
-										onclick = "[RulerDesignerWindow.SetSexuality( 'bisexual' )]"
-										tooltip = RULER_DESIGNER_SET_SEXUALITY_BISEXUAL
-										using = tooltip_se
-									}
-
-									button_bisexual_male = {
-										name = "bisexual_male"
-										visible = "[Not( RulerDesignerWindow.IsFemale )]"
-										down = "[RulerDesignerWindow.HasSexuality( 'bisexual' )]"
-										alwaystransparent = "[RulerDesignerWindow.HasSexuality( 'bisexual' )]"
-										onclick = "[RulerDesignerWindow.SetSexuality( 'bisexual' )]"
-										tooltip = RULER_DESIGNER_SET_SEXUALITY_BISEXUAL
-										using = tooltip_se
-									}
-
-									button_asexual = {
-										name = "asexual"
-										down = "[RulerDesignerWindow.HasSexuality( 'asexual' )]"
-										alwaystransparent = "[RulerDesignerWindow.HasSexuality( 'asexual' )]"
-										onclick = "[RulerDesignerWindow.SetSexuality( 'asexual' )]"
-										tooltip = RULER_DESIGNER_SET_SEXUALITY_ASEXUAL
-										using = tooltip_se
-									}
-
-									expand = {}
-								}
-
-								expand = {}
-							}
-
-							expand = {}
-						}
-
-
-					
-						vbox = {
-							name = "culture_and_faith"
-							layoutpolicy_horizontal = expanding
-							spacing = 20
-
-							vbox = {
-								layoutpolicy_horizontal = expanding
-								datacontext = "[RulerDesignerWindow.GetFaith]"
-
-								hbox = {
-									layoutpolicy_horizontal = expanding
-
-									text_label_left = {
-										layoutpolicy_horizontal = expanding
-										text = "RULER_DESIGNER_FAITH_LABEL"
-										using = Font_Size_Medium
-									}
-								}
-
-								hbox = {
-									layoutpolicy_horizontal = expanding
-
-									tooltipwidget = {
-										faith_tooltip_core_tenents = {}
-									}
-
-									icon = {
-										name = "item_icon"
-										size = { 60 60 }
-										texture = "[Faith.GetIcon]"
-										using = tooltip_se
-									}
-
-									vbox = {
-										margin_left = 5
-
-										hbox = {
-											layoutpolicy_horizontal = expanding
-
-											text_single = {
-												layoutpolicy_horizontal = expanding
-												text = "[Faith.GetReligion.GetNameNoTooltip]"
-												default_format = "#bold"
-												margin_right = 5
-												margin_bottom = 5
-											}
-
-											button_replace = {
-												name = "reset"
-												onclick = "[VariableSystem.Toggle( 'faith_select_window_open' )]"
-												onclick = "[VariableSystem.Clear( 'culture_select_window_open' )]"
-												onclick = "[VariableSystem.Clear( 'ethnicity_select_window_open')]"
-												onclick = "[VariableSystem.Clear( 'ek_subraces_visible' )]"
-												onclick = "[VariableSystem.Clear( 'ek_ethnicities_visible' )]"
-												tooltip = RULER_DESIGNER_CHOOSE_FAITH
-												using = tooltip_se
-											}
-										}
-
-										hbox = {
-											layoutpolicy_horizontal = expanding
-
-											text_single = {
-												layoutpolicy_horizontal = expanding
-												text = "[Faith.GetNameNoTooltip]"
-
-												margin_bottom = 5
-											}
-										}
-									}
-
-									expand = {}
-
-								}
-							}
-
-							hbox = {
-								layoutpolicy_horizontal = preferred
-								layoutpolicy_vertical = growing
-
-								vbox = {
-									name = "ethnicity_customization"
-									layoutpolicy_horizontal = expanding
-									datacontext = "[RulerDesignerWindow.GetCulture]"
-		
-									hbox = {
-										layoutpolicy_horizontal = expanding
-										
-										text_label_left = {
-											layoutpolicy_horizontal = expanding
-											text = "RULDER_DESIGNER_ETHNICITY_LABEL"
-											using = Font_Size_Medium
-										}
-									}
-		
-									hbox = {
-										layoutpolicy_horizontal = expanding
-										
-										vbox = {
-		
-											hbox = {
-												layoutpolicy_horizontal = expanding
-		
-												text_single = {
-													layoutpolicy_horizontal = expanding
-													text = "[VariableSystem.Get( 'ek_ethnicity' )]"
-													default_format = "#bold"
-		
-													margin_right = 5
-													margin_bottom = 5
-												}
-		
-												button_replace = {
-													onclick = "[VariableSystem.Clear( 'faith_select_window_open')]"
-													onclick = "[VariableSystem.Clear( 'culture_select_window_open')]"
-													onclick = "[VariableSystem.Toggle( 'ethnicity_select_window_open')]"
-													onclick = "[VariableSystem.Clear( 'ek_subraces_visible' )]"
-													onclick = "[VariableSystem.Clear( 'ek_ethnicities_visible' )]"
-													tooltip = RULER_DESIGNER_CHOOSE_ETHNICITY
-													using = tooltip_se
-												}
-											}
-		
-										}
-		
-										expand = {}
-									}
-
-									hbox = {
-										layoutpolicy_horizontal = expanding
-										minimumsize = { 0 40 }
-									}
-									
-								}
-
-								
-
-								vbox = {
-									parentanchor = bottom|left
-									layoutpolicy_horizontal = expanding
-									datacontext = "[RulerDesignerWindow.GetCulture]"
-
-									hbox = {
-										layoutpolicy_horizontal = expanding
-										
-										text_label_left = {
-											layoutpolicy_horizontal = expanding
-											text = "RULER_DESIGNER_CULTURE_LABEL"
-											using = Font_Size_Medium
-										}
-									}
-
-									vbox = {
-										layoutpolicy_horizontal = expanding
-
-									}
-
-									hbox = {
-										layoutpolicy_horizontal = expanding
-										
-
-
-
-										tooltip_enabled = "[Not(EqualTo_string( Culture.GetHeritage.GetNameNoTooltip, Localize('no') ) ) ]"
-										tooltipwidget = { 
-											ruler_designer_culture_tooltip = {
-											}
-										}
-
-										vbox = {
-
-											hbox = {
-												layoutpolicy_horizontal = expanding
-
-												text_single = {
-													visible = "[EqualTo_string( Culture.GetHeritage.GetNameNoTooltip, Localize('no') ) ]"
-													layoutpolicy_horizontal = expanding
-													text = "INCOMPATABLE_CULTURE"
-													tooltip = INCOMPATABLE_CULTURE_TOOLTIP
-													default_format = "#bold"
-
-													margin_right = 5
-													margin_bottom = 5
-												}
-
-												text_single = {
-													visible = "[Not(EqualTo_string( Culture.GetHeritage.GetNameNoTooltip, Localize('no') ) ) ]"
-													layoutpolicy_horizontal = expanding
-													text = "[Culture.GetHeritage.GetNameNoTooltip]"
-													default_format = "#bold"
-
-													margin_right = 5
-													margin_bottom = 5
-												}
-
-												button_replace = {
-													onclick = "[VariableSystem.Toggle( 'culture_select_window_open' )]"
-													onclick = "[VariableSystem.Clear( 'ethnicity_select_window_open')]"
-													onclick = "[VariableSystem.Clear( 'ek_subraces_visible' )]"
-													onclick = "[VariableSystem.Clear( 'ek_ethnicities_visible' )]"
-													using = Button_Close_Select_Faith
-													tooltip = RULER_DESIGNER_CHOOSE_CULTURE
-													using = tooltip_se
-												}
-											}
-
-											hbox = {
-												layoutpolicy_horizontal = expanding
-												text_single = {
-													layoutpolicy_horizontal = expanding
-													text = "[Culture.GetNameNoTooltip]"
-
-													margin_bottom = 5
-												}
-											}
-
-
-										}
-
-										expand = {}
-									}
-								}
-								
-							}
-						}
-
-						vbox = {
-							name = "name"
-							layoutpolicy_horizontal = expanding
-
-							vbox = {
-								layoutpolicy_horizontal = expanding
-
-								hbox = {
-									layoutpolicy_horizontal = expanding
-
-									text_label_left = {
-										layoutpolicy_horizontal = expanding
-										text = "RULER_DESIGNER_CHARACTER_NAME"
-										using = Font_Size_Medium
-									}
-								}
-							}
-
-							vbox = {
-								layoutpolicy_horizontal = expanding
-								margin_top = 10
-								spacing = 10
-
-								hbox = {
-									layoutpolicy_horizontal = expanding
-									spacing = 5
-
-									text_single = {
-										text = "RULER_DESIGNER_FIRST_NAME_LABEL"
-										align = nobaseline
-									}
-
-									editbox_standard = {
-										layoutpolicy_horizontal = expanding
-
-										blockoverride "editbox_properties"
-										{
-											text = "[RulerDesignerWindow.GetFirstName]"
-											ontextedited = "[RulerDesignerWindow.OnEditFirstName]"
-											maxcharacters = 40
-										}
-									}
-
-									expand = {}
-								}
-
-								hbox = {
-									name = "random_name"
-									layoutpolicy_horizontal = expanding
-									spacing = 5
-
-									button_randomize = {
-										name = "dice_icon"
-										size = { 30 30 }
-										enabled = no
-									}
-
-									text_single = {
-										text = "RULER_DESIGNER_RANDOM_NAME_LABEL"
-										align = nobaseline
-										max_width = 150
-									}
-
-									hbox = {
-										spacing = 5
-
-										button_standard = {
-											name = "random_faith_name"
-											datacontext = "[RulerDesignerWindow.GetFaith]"
-											visible = "[Faith.HasReservedNames( RulerDesignerWindow.IsFemale )]"
-											size = { 140 25 }
-											text = "[Faith.GetAdjectiveNoTooltip]"
-											tooltip = RULER_DESIGNER_RANDOM_NAME_FAITH_TOOLTIP
-											using = tooltip_se
-											onclick = "[RulerDesignerWindow.RandomizeFirstNameFaith]"
-										}
-
-										button_standard = {
-											name = "random_culture_name"
-											datacontext = "[RulerDesignerWindow.GetCulture]"
-											size = { 140 25 }
-											text = "[Culture.GetNameNoTooltip]"
-											tooltip = RULER_DESIGNER_RANDOM_NAME_CULTURE_TOOLTIP
-											using = tooltip_se
-											onclick = "[RulerDesignerWindow.RandomizeFirstNameCulture]"
-										}
-									}
-
-									expand = {}
-								}
-							}
-						}
-
-
-
-
-
-
-						vbox = {
-							name = "dynasty_house"
-							layoutpolicy_horizontal = expanding
-
-							hbox = {
-								layoutpolicy_horizontal = expanding
-
-								text_label_left = {
-									layoutpolicy_horizontal = expanding
-									text = "RULER_DESIGNER_DYNASTY_LABEL"
-									using = Font_Size_Medium
-								}
-							}
-
-							vbox = {
-								datacontext = "[RulerDesignerWindow.GetDynastyCoatOfArms]"
-								layoutpolicy_horizontal = expanding
-
-								margin_top = 25
-								margin_bottom = -10
-
-								hbox = {
-									spacing = 5
-
-									coa_preview_dynasty_huge = {
-										datacontext = "[DesignerCoA.GetCoA]"
-									}
-
-									button_edit_text = {
-										onclick = "[RulerDesignerWindow.OpenDynastyCoatOfArmsDesigner]"
-										onclick = "[VariableSystem.Set( 'coat_of_arms_customization_open', 'dynasty' )]"
-										tooltip = RULER_DESIGNER_CUSTOMIZE_DYNASTY
-										using = tooltip_se
-									}
-								}
-							}
-						}
-
-						vbox = {
-							name = "realm"
-							layoutpolicy_horizontal = expanding
-							datacontext = "[RulerDesignerWindow.GetCharacterToOverwrite]"
-							datacontext = "[Character.GetPrimaryTitle]"
-							datacontext = "[RulerDesignerWindow.GetTitleCoatOfArms]"
-
-							vbox = {
-								layoutpolicy_horizontal = expanding
-
-								hbox = {
-									layoutpolicy_horizontal = expanding
-
-									text_label_left = {
-										layoutpolicy_horizontal = expanding
-										text = "RULER_DESIGNER_REALM_LABEL"
-										using = Font_Size_Medium
-									}
-								}
-							}
-
-							vbox = {
-								layoutpolicy_horizontal = expanding
-								margin_top = 5
-								spacing = 10
-
-								hbox = {
-									layoutpolicy_horizontal = expanding
-									margin_right = 30
-
-									text_multi = {
-										layoutpolicy_horizontal = expanding
-										text = "RULER_DESIGNER_TITLE_NAME"
-										default_format = "#high"
-										using = Font_Size_Big
-										max_width = 470
-										autoresize = yes
-										align = center
-									}
-								}
-
-								hbox = {
-									margin_left = 30
-
-									coa_realm_huge_crown = {
-										name = "default_coa"
-										visible = "[Not( DesignerCoA.IsSet )]"
-										blockoverride "coa_button" {}
-									}
-
-									container = {
-										visible = "[DesignerCoA.IsSet]"
-
-										coa_preview_realm_huge_crown = {
-											name = "custom_coa"
-											datacontext = "[DesignerCoA.GetCoA]"
-
-											blockoverride "frame_override"
-											{
-												frame = "[Title.GetTierFrame]"
-											}
-											blockoverride "realm_mask_texture"
-											{
-												texture = "[Character.GetGovernment.GetRealmMask]"
-											}
-											blockoverride "realm_frame_texture"
-											{
-												texture = "[Character.GetGovernment.GetRealmFrame('(int32)115')]"
-											}
-										}
-									}
-
-									button_edit_text = {
-										onclick = "[RulerDesignerWindow.OpenTitleCoatOfArmsDesigner]"
-										onclick = "[VariableSystem.Set( 'coat_of_arms_customization_open', 'title' )]"
-										tooltip = RULER_DESIGNER_CUSTOMIZE_TITLE
-										using = tooltip_se
-									}
-
-									button_revert = {
-										onclick = "[RulerDesignerWindow.ResetTitleToHistorical]"
-										tooltip = RULER_DESIGNER_RESET_TITLE
-										using = tooltip_se
-									}
-								}
-							}
-						}
-					}
-
-					expand = {}
 
 					hbox = {
 						layoutpolicy_horizontal = expanding
 
-						button_standard_back = {
-							onclick = "[RulerDesignerWindow.Close]"
-							onclick = "[GetVariableSystem.Clear( 'ek_ruler_designer_open' )]"
-							shortcut = "close_window"
+						vbox = {
+							name = "left_panel"
+							margin_right = 15
 
-							blockoverride "text"
-							{
-								text = "BACK_LABEL"
+							vbox = {
+								layoutpolicy_horizontal = expanding
+								spacing = 20
+
+								### EK DEBUG
+								#ek_debug_vbox = {
+								#	visible = "[InDebugMode]"
+								#}
+
+								hbox = {
+									name = "sex_customization"
+									layoutpolicy_horizontal = expanding
+									spacing = 40
+
+									vbox = {
+										name = "sex"
+										layoutpolicy_vertical = expanding
+
+										vbox = {
+											layoutpolicy_horizontal = expanding
+
+											hbox = {
+												layoutpolicy_horizontal = expanding
+
+												text_label_left = {
+													text = "RULER_DESIGNER_SEX"
+													max_width = 120
+													autoresize = yes
+													using = Font_Size_Medium
+												}
+											}
+										}
+
+										hbox = {
+											layoutpolicy_horizontal = expanding
+											margin_top = 3
+											spacing = 5
+
+											button_male = {
+												name = "male"
+												alwaystransparent = "[Not( RulerDesignerWindow.IsFemale )]"
+												onclick = "[RulerDesignerWindow.SetIsFemale( '(bool)no' )]"
+												onclick = "[VariableSystem.Set( 'ek_gender', 'male' )]"
+												down = "[Not( RulerDesignerWindow.IsFemale )]"
+												tooltip = RULER_DESIGNER_SET_IS_MALE
+												using = tooltip_se
+
+												onclick = "[PdxGuiTriggerAllAnimations('ruler_designer_portrait_refresh')]"
+											}
+
+											button_female = {
+												name = "female"
+												alwaystransparent = "[RulerDesignerWindow.IsFemale]"
+												onclick = "[RulerDesignerWindow.SetIsFemale( '(bool)yes' )]"
+												onclick = "[VariableSystem.Set( 'ek_gender', 'female' )]"
+												down = "[RulerDesignerWindow.IsFemale]"
+												tooltip = RULER_DESIGNER_SET_IS_FEMALE
+												using = tooltip_se
+
+												onclick = "[PdxGuiTriggerAllAnimations('ruler_designer_portrait_refresh')]"
+											}
+
+											expand = {}
+										}
+
+										expand = {}
+									}
+
+
+									vbox = {
+										name = "sexuality"
+										layoutpolicy_vertical = expanding
+
+
+										vbox = {
+											layoutpolicy_horizontal = expanding
+
+											hbox = {
+												layoutpolicy_horizontal = expanding
+
+												text_label_left = {
+													text = "RULER_DESIGNER_SEXUALITY"
+													max_width = 250
+													autoresize = yes
+													using = Font_Size_Medium
+												}
+											}
+										}
+
+
+										text_single = {
+											margin_top = 3
+											text = "RULER_DESIGNER_SEXUALITY_NOT_AVAILABLE_INFO"
+											visible = "[Not(RulerDesignerWindow.CanChangeSexuality)]"
+										}
+
+
+
+										hbox = {
+											visible = "[RulerDesignerWindow.CanChangeSexuality]"
+											layoutpolicy_horizontal = expanding
+
+											margin_top = 3
+											spacing = 5
+
+											button_randomize = {
+												name = "random"
+												alwaystransparent = "[RulerDesignerWindow.HasSexuality( 'none' )]"
+												onclick = "[RulerDesignerWindow.SetSexuality( 'none' )]"
+												down = "[RulerDesignerWindow.HasSexuality( 'none' )]"
+												tooltip = RULER_DESIGNER_SET_SEXUALITY_RANDOM
+												using = tooltip_se
+											}
+
+											button_heterosexual = {
+												name = "heterosexual"
+												alwaystransparent = "[RulerDesignerWindow.HasSexuality( 'heterosexual' )]"
+												onclick = "[RulerDesignerWindow.SetSexuality( 'heterosexual' )]"
+												down = "[RulerDesignerWindow.HasSexuality( 'heterosexual' )]"
+												tooltip = RULER_DESIGNER_SET_SEXUALITY_HETEROSEXUAL
+												using = tooltip_se
+											}
+
+											button_homosexual_female = {
+												name = "homosexual_female"
+												visible = "[RulerDesignerWindow.IsFemale]"
+												alwaystransparent = "[RulerDesignerWindow.HasSexuality( 'homosexual' )]"
+												onclick = "[RulerDesignerWindow.SetSexuality( 'homosexual' )]"
+												down = "[RulerDesignerWindow.HasSexuality( 'homosexual' )]"
+												tooltip = RULER_DESIGNER_SET_SEXUALITY_HOMOSEXUAL
+												using = tooltip_se
+											}
+
+											button_homosexual_male = {
+												name = "homosexual_male"
+												visible = "[Not( RulerDesignerWindow.IsFemale )]"
+												alwaystransparent = "[RulerDesignerWindow.HasSexuality( 'homosexual' )]"
+												onclick = "[RulerDesignerWindow.SetSexuality( 'homosexual' )]"
+												down = "[RulerDesignerWindow.HasSexuality( 'homosexual' )]"
+												tooltip = RULER_DESIGNER_SET_SEXUALITY_HOMOSEXUAL
+												using = tooltip_se
+											}
+
+											button_bisexual_female = {
+												name = "bisexual_female"
+												visible = "[RulerDesignerWindow.IsFemale]"
+												alwaystransparent = "[RulerDesignerWindow.HasSexuality( 'bisexual' )]"
+												onclick = "[RulerDesignerWindow.SetSexuality( 'bisexual' )]"												
+												down = "[RulerDesignerWindow.HasSexuality( 'bisexual' )]"
+												tooltip = RULER_DESIGNER_SET_SEXUALITY_BISEXUAL
+												using = tooltip_se
+											}
+
+											button_bisexual_male = {
+												name = "bisexual_male"
+												visible = "[Not( RulerDesignerWindow.IsFemale )]"
+												alwaystransparent = "[RulerDesignerWindow.HasSexuality( 'bisexual' )]"
+												onclick = "[RulerDesignerWindow.SetSexuality( 'bisexual' )]"
+												down = "[RulerDesignerWindow.HasSexuality( 'bisexual' )]"
+												tooltip = RULER_DESIGNER_SET_SEXUALITY_BISEXUAL
+												using = tooltip_se
+											}
+
+											button_asexual = {
+												name = "asexual"
+												alwaystransparent = "[RulerDesignerWindow.HasSexuality( 'asexual' )]"
+												onclick = "[RulerDesignerWindow.SetSexuality( 'asexual' )]"
+												down = "[RulerDesignerWindow.HasSexuality( 'asexual' )]"
+												tooltip = RULER_DESIGNER_SET_SEXUALITY_ASEXUAL
+												using = tooltip_se
+											}
+
+											expand = {}
+										}
+
+										expand = {}
+									}
+
+									expand = {}
+								}
+
+
+							
+								vbox = {
+									name = "culture_and_faith"
+									layoutpolicy_horizontal = expanding
+									spacing = 20
+
+									vbox = {
+										layoutpolicy_horizontal = expanding
+										datacontext = "[RulerDesignerWindow.GetFaith]"
+
+										hbox = {
+											layoutpolicy_horizontal = expanding
+
+											text_label_left = {
+												layoutpolicy_horizontal = expanding
+												text = "RULER_DESIGNER_FAITH_LABEL"
+												using = Font_Size_Medium
+											}
+										}
+
+										hbox = {
+											layoutpolicy_horizontal = expanding
+
+											tooltipwidget = {
+												faith_tooltip_core_tenents = {}
+											}
+
+											icon = {
+												name = "item_icon"
+												size = { 60 60 }
+												texture = "[Faith.GetIcon]"
+												using = tooltip_se
+											}
+
+											vbox = {
+												margin_left = 5
+
+												hbox = {
+													layoutpolicy_horizontal = expanding
+
+													text_single = {
+														layoutpolicy_horizontal = expanding
+														text = "[Faith.GetReligion.GetNameNoTooltip]"
+														default_format = "#bold"
+														margin_right = 5
+														margin_bottom = 5
+													}
+
+													button_replace = {
+														name = "reset"
+														onclick = "[VariableSystem.Toggle( 'faith_select_window_open' )]"
+														onclick = "[VariableSystem.Clear( 'culture_select_window_open' )]"
+														onclick = "[VariableSystem.Clear( 'ethnicity_select_window_open')]"
+														onclick = "[VariableSystem.Clear( 'ek_subraces_visible' )]"
+														onclick = "[VariableSystem.Clear( 'ek_ethnicities_visible' )]"
+														tooltip = RULER_DESIGNER_CHOOSE_FAITH
+														using = tooltip_se
+													}
+												}
+
+												hbox = {
+													layoutpolicy_horizontal = expanding
+
+													text_single = {
+														layoutpolicy_horizontal = expanding
+														text = "[Faith.GetNameNoTooltip]"
+
+														margin_bottom = 5
+													}
+												}
+											}
+
+											expand = {}
+
+										}
+									}
+
+									hbox = {
+										layoutpolicy_horizontal = preferred
+										layoutpolicy_vertical = growing
+
+										vbox = {
+											name = "ethnicity_customization"
+											layoutpolicy_horizontal = expanding
+											datacontext = "[RulerDesignerWindow.GetCulture]"
+				
+											hbox = {
+												layoutpolicy_horizontal = expanding
+												
+												text_label_left = {
+													layoutpolicy_horizontal = expanding
+													text = "RULDER_DESIGNER_ETHNICITY_LABEL"
+													using = Font_Size_Medium
+												}
+											}
+				
+											hbox = {
+												layoutpolicy_horizontal = expanding
+												
+												vbox = {
+				
+													hbox = {
+														layoutpolicy_horizontal = expanding
+				
+														text_single = {
+															layoutpolicy_horizontal = expanding
+															text = "[VariableSystem.Get( 'ek_ethnicity' )]"
+															default_format = "#bold"
+				
+															margin_right = 5
+															margin_bottom = 5
+														}
+				
+														button_replace = {
+															onclick = "[VariableSystem.Clear( 'faith_select_window_open')]"
+															onclick = "[VariableSystem.Clear( 'culture_select_window_open')]"
+															onclick = "[VariableSystem.Toggle( 'ethnicity_select_window_open')]"
+															onclick = "[VariableSystem.Clear( 'ek_subraces_visible' )]"
+															onclick = "[VariableSystem.Clear( 'ek_ethnicities_visible' )]"
+															tooltip = RULER_DESIGNER_CHOOSE_ETHNICITY
+															using = tooltip_se
+														}
+													}
+				
+												}
+				
+												expand = {}
+											}
+
+											hbox = {
+												layoutpolicy_horizontal = expanding
+												minimumsize = { 0 40 }
+											}
+											
+										}
+
+										
+
+										vbox = {
+											parentanchor = bottom|left
+											layoutpolicy_horizontal = expanding
+											datacontext = "[RulerDesignerWindow.GetCulture]"
+
+											hbox = {
+												layoutpolicy_horizontal = expanding
+												
+												text_label_left = {
+													layoutpolicy_horizontal = expanding
+													text = "RULER_DESIGNER_CULTURE_LABEL"
+													using = Font_Size_Medium
+												}
+											}
+
+											vbox = {
+												layoutpolicy_horizontal = expanding
+
+											}
+
+											hbox = {
+												layoutpolicy_horizontal = expanding
+												
+
+
+
+												tooltip_enabled = "[Not(EqualTo_string( Culture.GetHeritage.GetNameNoTooltip, Localize('no') ) ) ]"
+												tooltipwidget = { 
+													ruler_designer_culture_tooltip = {
+													}
+												}
+
+												vbox = {
+
+													hbox = {
+														layoutpolicy_horizontal = expanding
+
+														text_single = {
+															visible = "[EqualTo_string( Culture.GetHeritage.GetNameNoTooltip, Localize('no') ) ]"
+															layoutpolicy_horizontal = expanding
+															text = "INCOMPATABLE_CULTURE"
+															tooltip = INCOMPATABLE_CULTURE_TOOLTIP
+															default_format = "#bold"
+
+															margin_right = 5
+															margin_bottom = 5
+														}
+
+														text_single = {
+															visible = "[Not(EqualTo_string( Culture.GetHeritage.GetNameNoTooltip, Localize('no') ) ) ]"
+															layoutpolicy_horizontal = expanding
+															text = "[Culture.GetHeritage.GetNameNoTooltip]"
+															default_format = "#bold"
+
+															margin_right = 5
+															margin_bottom = 5
+														}
+
+														button_replace = {
+															onclick = "[VariableSystem.Toggle( 'culture_select_window_open' )]"
+															onclick = "[VariableSystem.Clear( 'ethnicity_select_window_open')]"
+															onclick = "[VariableSystem.Clear( 'ek_subraces_visible' )]"
+															onclick = "[VariableSystem.Clear( 'ek_ethnicities_visible' )]"
+															using = Button_Close_Select_Faith
+															tooltip = RULER_DESIGNER_CHOOSE_CULTURE
+															using = tooltip_se
+														}
+													}
+
+													hbox = {
+														layoutpolicy_horizontal = expanding
+														text_single = {
+															layoutpolicy_horizontal = expanding
+															text = "[Culture.GetNameNoTooltip]"
+
+															margin_bottom = 5
+														}
+													}
+
+
+												}
+
+												expand = {}
+											}
+										}
+										
+									}
+								}
+
+								vbox = {
+									name = "name"
+									layoutpolicy_horizontal = expanding
+
+									vbox = {
+										layoutpolicy_horizontal = expanding
+
+										hbox = {
+											layoutpolicy_horizontal = expanding
+
+											text_label_left = {
+												layoutpolicy_horizontal = expanding
+												text = "RULER_DESIGNER_CHARACTER_NAME"
+												using = Font_Size_Medium
+											}
+										}
+									}
+
+									vbox = {
+										layoutpolicy_horizontal = expanding
+										margin_top = 10
+										spacing = 10
+
+										hbox = {
+											layoutpolicy_horizontal = expanding
+											spacing = 5
+
+											text_single = {
+												text = "RULER_DESIGNER_FIRST_NAME_LABEL"
+												align = nobaseline
+											}
+
+											editbox_standard = {
+												layoutpolicy_horizontal = expanding
+
+												blockoverride "editbox_properties"
+												{
+													text = "[RulerDesignerWindow.GetFirstName]"
+													ontextedited = "[RulerDesignerWindow.OnEditFirstName]"
+													maxcharacters = 40
+												}
+											}
+
+											expand = {}
+										}
+
+										hbox = {
+											name = "random_name"
+											layoutpolicy_horizontal = expanding
+											spacing = 5
+
+											button_randomize = {
+												name = "dice_icon"
+												size = { 30 30 }
+												enabled = no
+											}
+
+											text_single = {
+												text = "RULER_DESIGNER_RANDOM_NAME_LABEL"
+												align = nobaseline
+												max_width = 150
+											}
+
+											hbox = {
+												spacing = 5
+
+												button_standard = {
+													name = "random_faith_name"
+													datacontext = "[RulerDesignerWindow.GetFaith]"
+													visible = "[Faith.HasReservedNames( RulerDesignerWindow.IsFemale )]"
+													size = { 140 25 }
+													text = "[Faith.GetAdjectiveNoTooltip]"
+													tooltip = RULER_DESIGNER_RANDOM_NAME_FAITH_TOOLTIP
+													using = tooltip_se
+													onclick = "[RulerDesignerWindow.RandomizeFirstNameFaith]"
+												}
+
+												button_standard = {
+													name = "random_culture_name"
+													datacontext = "[RulerDesignerWindow.GetCulture]"
+													size = { 140 25 }
+													text = "[Culture.GetNameNoTooltip]"
+													tooltip = RULER_DESIGNER_RANDOM_NAME_CULTURE_TOOLTIP
+													using = tooltip_se
+													onclick = "[RulerDesignerWindow.RandomizeFirstNameCulture]"
+												}
+											}
+
+											expand = {}
+										}
+									}
+								}
+
+
+
+
+
+
+								vbox = {
+									name = "dynasty_house"
+									layoutpolicy_horizontal = expanding
+
+									hbox = {
+										layoutpolicy_horizontal = expanding
+
+										text_label_left = {
+											layoutpolicy_horizontal = expanding
+											text = "RULER_DESIGNER_DYNASTY_LABEL"
+											using = Font_Size_Medium
+										}
+									}
+
+									vbox = {
+										datacontext = "[RulerDesignerWindow.GetDynastyCoatOfArms]"
+										layoutpolicy_horizontal = expanding
+
+										margin_top = 25
+										margin_bottom = -10
+
+										hbox = {
+											spacing = 5
+
+											coa_preview_dynasty_huge = {
+												datacontext = "[DesignerCoA.GetCoA]"
+											}
+
+											button_edit_text = {
+												onclick = "[RulerDesignerWindow.OpenDynastyCoatOfArmsDesigner]"
+												onclick = "[VariableSystem.Set( 'coat_of_arms_customization_open', 'dynasty' )]"
+												tooltip = RULER_DESIGNER_CUSTOMIZE_DYNASTY
+												using = tooltip_se
+											}
+										}
+									}
+								}
+
+								vbox = {
+									name = "realm"
+									layoutpolicy_horizontal = expanding
+									datacontext = "[RulerDesignerWindow.GetCharacterToOverwrite]"
+									datacontext = "[Character.GetPrimaryTitle]"
+									datacontext = "[RulerDesignerWindow.GetTitleCoatOfArms]"
+
+									vbox = {
+										layoutpolicy_horizontal = expanding
+
+										hbox = {
+											layoutpolicy_horizontal = expanding
+
+											text_label_left = {
+												layoutpolicy_horizontal = expanding
+												text = "RULER_DESIGNER_REALM_LABEL"
+												using = Font_Size_Medium
+											}
+										}
+									}
+
+									vbox = {
+										layoutpolicy_horizontal = expanding
+										margin_top = 5
+
+										hbox = {
+											layoutpolicy_horizontal = expanding
+											margin_right = 30
+
+											text_multi = {
+												layoutpolicy_horizontal = expanding
+												text = "RULER_DESIGNER_TITLE_NAME"
+												default_format = "#high"
+												using = Font_Size_Big
+												max_width = 470
+												autoresize = yes
+												align = center
+											}
+										}
+
+										hbox = {
+											margin_left = 30
+
+											coa_realm_huge_crown = {
+												name = "default_coa"
+												visible = "[Not( DesignerCoA.IsSet )]"
+												blockoverride "coa_button" {}
+											}
+
+											container = {
+												visible = "[DesignerCoA.IsSet]"
+
+												coa_preview_realm_huge_crown = {
+													name = "custom_coa"
+													datacontext = "[DesignerCoA.GetCoA]"
+
+													blockoverride "frame_override"
+													{
+														frame = "[Title.GetTierFrame]"
+													}
+													blockoverride "realm_mask_texture"
+													{
+														texture = "[Character.GetGovernment.GetRealmMask]"
+													}
+													blockoverride "realm_frame_texture"
+													{
+														texture = "[Character.GetGovernment.GetRealmFrame('(int32)115')]"
+													}
+												}
+											}
+
+											button_edit_text = {
+												onclick = "[RulerDesignerWindow.OpenTitleCoatOfArmsDesigner]"
+												onclick = "[VariableSystem.Set( 'coat_of_arms_customization_open', 'title' )]"
+												tooltip = RULER_DESIGNER_CUSTOMIZE_TITLE
+												using = tooltip_se
+											}
+
+											button_revert = {
+												onclick = "[RulerDesignerWindow.ResetTitleToHistorical]"
+												tooltip = RULER_DESIGNER_RESET_TITLE
+												using = tooltip_se
+											}
+										}
+									}
+
+									widget = {
+										size = {520 1}
+									}
+								}
 							}
 						}
 
 						expand = {}
+
+						divider_light = {
+							visible = "[Not( VariableSystem.Exists( 'trait_select_window_open' ) )]"
+							layoutpolicy_vertical = expanding
+
+						}
 					}
-				}
-			}
+
+							expand = {}
+
+							hbox = {
+								layoutpolicy_horizontal = expanding
+
+								spacing =  10
+
+								background = {
+									margin  = {15 20}
+									margin_left = 30
+									margin_bottom = 30
+									using = Background_Area_Dark
+									using = Mask_Rough_Edges
+								}
+								background = {
+		
+									using = Background_Area_Light
+									using = Mask_Rough_Edges
+									alpha = 0.20
+									margin  = {15 20}
+									margin_left = 30
+									margin_bottom = 30
+									modify_texture = {
+										texture = "gfx/interface/component_masks/patterns/mask_pattern_02.dds"
+										spriteType = Corneredtiled
+										blend_mode = alphamultiply
+										texture_density = 0.8
+									}
+									modify_texture = {
+										texture = "gfx/interface/component_masks/mask_fade_horizontal_middle_thick.dds"
+										blend_mode = alphamultiply
+									}
+								}
+
+								button_standard_back = {
+									onclick = "[RulerDesignerWindow.Close]"
+									onclick = "[GetVariableSystem.Clear( 'ek_ruler_designer_open' )]"
+									shortcut = "close_window"
+
+									blockoverride "text"
+									{
+										text = "BACK_LABEL"
+									}
+								}
+
+								button_standard = {
+									text = "RULER_DESIGNER_SAVE_RULER"
+		
+									enabled = "[RulerDesignerWindow.CanOpenSaveRulerWindow]"
+									tooltip = "[RulerDesignerWindow.CanOpenSaveRulerWindowTooltip]"
+		
+									onclick = "[RulerDesignerWindow.OpenSaveRulerWindow]"
+								}
+
+								
+								button_standard = {
+									text = "RULER_DESIGNER_LOAD_RULER"
+
+									enabled = "[RulerDesignerWindow.CanOpenLoadRulerWindow]"
+									tooltip = "[RulerDesignerWindow.CanOpenLoadRulerWindowTooltip]"
+
+									onclick = "[RulerDesignerWindow.OpenLoadRulerWindow]"
+								}
+
+								expand = {}
+							}
+						}
+					}
 
 			divider_light = {
 				visible = "[Not( VariableSystem.Exists( 'trait_select_window_open' ) )]"
@@ -1535,7 +1606,7 @@ window = {
 				layoutpolicy_horizontal = expanding
 				layoutpolicy_vertical = expanding
 
-				#error_horse = {}
+				error_horse = {}
 
 				icon = {
 					parentanchor = bottom|hcenter
@@ -2308,10 +2379,667 @@ window = {
 								}
 							}
 
-							text_single = {
-								name = "prowess_muscle_info"
-								text = PROWESS_MUSCLE_INFO_PERSONAL
-								default_format = "#weak"
+							#Terribly messy, each one is pretty much hard coded to add a trait and remove the previous one.
+							#There probably is a nice way to do these, but it's way above my paygrade. - Buck
+							hbox = {
+								margin = { 3 0 }
+								layoutpolicy_horizontal = expanding
+								
+								name = "add_arcana_widgets"
+								arcana_counter = {
+									name = "add_arcana_1"
+									
+									visible = "[EqualTo_string(VariableSystem.Get('ek_arcana'), '0' ) ]"
+
+									blockoverride "skill_level"
+									{
+										text = "SKILL_TERRIBLE"
+									}
+
+									blockoverride "decrease_button"
+									{
+										button_round = {
+											size = { 28 28 }
+											enabled = "[Not(EqualTo_string(VariableSystem.Get('ek_arcana'), '0' ) )]"
+						
+											button_minus_small = {
+												parentanchor = center
+												alwaystransparent = yes
+											}
+										}
+									}
+						
+									blockoverride "increase_button"
+									{
+
+										button_round = {
+											size = { 28 28 }
+
+											datacontext = "[GetNullCharacter]"
+											datacontext = "[RulerDesignerWindow.AccessOtherTraitSlots]"
+											datamodel = "[TraitSlotArray.AccessSlots]"
+									
+
+											onclick = "[TraitSlotArray.StartEditing]"
+											onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_1').Self ) ]"
+											onclick = "[VariableSystem.Set('ek_arcana','1')]"
+											
+											button_plus_small = {
+												name = "increase_skill"
+												parentanchor = center
+												alwaystransparent = yes
+											}
+										}
+									}
+								}
+								arcana_counter = {
+									name = "add_arcana_2"
+									visible = "[EqualTo_string(VariableSystem.Get('ek_arcana'), '1' ) ]"
+
+									blockoverride "skill_level"
+									{
+										text = "SKILL_TERRIBLE"
+									}
+
+									blockoverride "decrease_button"
+									{
+										arcana_trait_button = {
+		
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[VariableSystem.Set('ek_arcana','0')]"
+											}
+							
+											blockoverride "icon"
+											{
+												button_minus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+						
+									blockoverride "increase_button"
+									{
+										arcana_trait_button = {
+			
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_2').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','2')]"
+											}
+							
+											blockoverride "icon"
+											{
+			
+												button_plus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+								}
+								arcana_counter = {
+									name = "add_arcana_3"
+									visible = "[EqualTo_string(VariableSystem.Get('ek_arcana'), '2' ) ]"
+
+									blockoverride "skill_level"
+									{
+										text = "SKILL_TERRIBLE"
+									}
+
+									blockoverride "decrease_button"
+									{
+										arcana_trait_button = {
+		
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_1').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','1')]"
+											}
+							
+											blockoverride "icon"
+											{
+												button_minus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+						
+									blockoverride "increase_button"
+									{
+										arcana_trait_button = {
+			
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_3').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','3')]"
+											}
+							
+											blockoverride "icon"
+											{
+			
+												button_plus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+								}
+								arcana_counter = {
+									name = "add_arcana_4"
+									visible = "[EqualTo_string(VariableSystem.Get('ek_arcana'), '3' ) ]"
+
+									blockoverride "skill_level"
+									{
+										text = "SKILL_TERRIBLE"
+									}
+
+									blockoverride "decrease_button"
+									{
+										arcana_trait_button = {
+		
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_2').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','2')]"
+											}
+							
+											blockoverride "icon"
+											{
+												button_minus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+						
+									blockoverride "increase_button"
+									{
+										arcana_trait_button = {
+			
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_4').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','4')]"
+											}
+							
+											blockoverride "icon"
+											{
+			
+												button_plus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+								}
+								arcana_counter = {
+									name = "add_arcana_5"
+									visible = "[EqualTo_string(VariableSystem.Get('ek_arcana'), '4' ) ]"
+
+									blockoverride "skill_level"
+									{
+										text = "SKILL_TERRIBLE"
+									}
+
+									blockoverride "decrease_button"
+									{
+										arcana_trait_button = {
+		
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_3').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','3')]"
+											}
+							
+											blockoverride "icon"
+											{
+												button_minus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+						
+									blockoverride "increase_button"
+									{
+										arcana_trait_button = {
+			
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_5').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','5')]"
+											}
+							
+											blockoverride "icon"
+											{
+			
+												button_plus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+								}
+								arcana_counter = {
+									name = "add_arcana_6"
+									visible = "[EqualTo_string(VariableSystem.Get('ek_arcana'), '5' ) ]"
+
+									blockoverride "skill_level"
+									{
+										text = "SKILL_POOR"
+									}
+
+									blockoverride "decrease_button"
+									{
+										arcana_trait_button = {
+		
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_4').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','4')]"
+											}
+							
+											blockoverride "icon"
+											{
+												button_minus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+						
+									blockoverride "increase_button"
+									{
+										arcana_trait_button = {
+			
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_6').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','6')]"
+											}
+							
+											blockoverride "icon"
+											{
+			
+												button_plus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+								}
+
+								arcana_counter = {
+									name = "add_arcana_7"
+									visible = "[EqualTo_string(VariableSystem.Get('ek_arcana'), '6' ) ]"
+
+									blockoverride "skill_level"
+									{
+										text = "SKILL_POOR"
+									}
+
+									blockoverride "decrease_button"
+									{
+										arcana_trait_button = {
+		
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_5').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','5')]"
+											}
+							
+											blockoverride "icon"
+											{
+												button_minus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+						
+									blockoverride "increase_button"
+									{
+										arcana_trait_button = {
+			
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_7').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','7')]"
+											}
+							
+											blockoverride "icon"
+											{
+			
+												button_plus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+								}
+
+								arcana_counter = {
+									name = "add_arcana_8"
+									visible = "[EqualTo_string(VariableSystem.Get('ek_arcana'), '7' ) ]"
+
+									blockoverride "skill_level"
+									{
+										text = "SKILL_POOR"
+									}
+
+									blockoverride "decrease_button"
+									{
+										arcana_trait_button = {
+		
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_6').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','6')]"
+											}
+							
+											blockoverride "icon"
+											{
+												button_minus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+						
+									blockoverride "increase_button"
+									{
+										arcana_trait_button = {
+			
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_8').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','8')]"
+											}
+							
+											blockoverride "icon"
+											{
+			
+												button_plus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+								}
+
+								arcana_counter = {
+									name = "add_arcana_9"
+									visible = "[EqualTo_string(VariableSystem.Get('ek_arcana'), '8' ) ]"
+
+									blockoverride "skill_level"
+									{
+										text = "SKILL_POOR"
+									}
+
+									blockoverride "decrease_button"
+									{
+										arcana_trait_button = {
+		
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_7').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','7')]"
+											}
+							
+											blockoverride "icon"
+											{
+												button_minus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+						
+									blockoverride "increase_button"
+									{
+										arcana_trait_button = {
+			
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_9').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','9')]"
+											}
+							
+											blockoverride "icon"
+											{
+			
+												button_plus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+								}
+
+								arcana_counter = {
+									name = "add_arcana_10"
+									visible = "[EqualTo_string(VariableSystem.Get('ek_arcana'), '9' ) ]"
+
+									blockoverride "skill_level"
+									{
+										text = "SKILL_AVERAGE"
+									}
+
+									blockoverride "decrease_button"
+									{
+										arcana_trait_button = {
+		
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_8').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','8')]"
+											}
+							
+											blockoverride "icon"
+											{
+												button_minus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+						
+									blockoverride "increase_button"
+									{
+										arcana_trait_button = {
+			
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_10').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','10')]"
+											}
+							
+											blockoverride "icon"
+											{
+			
+												button_plus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+								}
+
+								arcana_counter = {
+									name = "add_arcana_11"
+									visible = "[EqualTo_string(VariableSystem.Get('ek_arcana'), '10' ) ]"
+
+									blockoverride "skill_level"
+									{
+										text = "SKILL_AVERAGE"
+									}
+
+									blockoverride "decrease_button"
+									{
+										arcana_trait_button = {
+		
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_9').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','9')]"
+											}
+							
+											blockoverride "icon"
+											{
+												button_minus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+						
+									blockoverride "increase_button"
+									{
+										arcana_trait_button = {
+			
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_11').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','11')]"
+											}
+							
+											blockoverride "icon"
+											{
+			
+												button_plus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+								}
+
+								arcana_counter = {
+									name = "add_arcana_12"
+									visible = "[EqualTo_string(VariableSystem.Get('ek_arcana'), '11' ) ]"
+
+									blockoverride "skill_level"
+									{
+										text = "SKILL_AVERAGE"
+									}
+
+									blockoverride "decrease_button"
+									{
+										arcana_trait_button = {
+		
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_10').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','10')]"
+											}
+							
+											blockoverride "icon"
+											{
+												button_minus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+						
+									blockoverride "increase_button"
+									{
+										arcana_trait_button = {
+			
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_12').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','12')]"
+											}
+							
+											blockoverride "icon"
+											{
+			
+												button_plus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+								}
+
+								arcana_counter = {
+									name = "finish_arcana"
+									visible = "[EqualTo_string(VariableSystem.Get('ek_arcana'), '12' ) ]"
+
+									blockoverride "skill_level"
+									{
+										text = "SKILL_AVERAGE"
+									}
+
+									blockoverride "decrease_button"
+									{
+										arcana_trait_button = {
+		
+											blockoverride "arcana_on_click"
+											{
+												onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_11').Self ) ]"
+												onclick = "[VariableSystem.Set('ek_arcana','11')]"
+											}
+							
+											blockoverride "icon"
+											{
+												button_minus_small = {
+													parentanchor = center
+													alwaystransparent = yes
+												}
+											}
+										}
+									}
+						
+									blockoverride "increase_button"
+									{
+										button_round = {
+											size = { 28 28 }
+											enabled = "[Not(EqualTo_string(VariableSystem.Get('ek_arcana'), '12' ) )]"
+						
+											button_plus_small = {
+												parentanchor = center
+												alwaystransparent = yes
+											}
+										}
+									}
+								}
+
+								textbox = {
+									name = "prowess_muscle_info"
+									size = { 240 60 }
+									margin = { 10 0 }
+									align = center|vcenter
+									multiline = yes
+									text = PROWESS_MUSCLE_INFO_PERSONAL
+									default_format = "#weak"
+								}
 							}
 						}
 
@@ -2363,7 +3091,8 @@ window = {
 									expand = {}
 								}
 
-								vbox = {
+								hbox = {
+									spacing = 20
 									hbox = {
 										name = "generate_sons_amount"
 										layoutpolicy_horizontal = expanding
@@ -2547,10 +3276,10 @@ window = {
 
 					using = Animation_ShowHide_Quick
 
-					#EK DEBUG
-					# ek_debug_vbox = {
-					# 	visible = "[InDebugMode]"
-					# }
+					### EK DEBUG
+					#ek_debug_vbox = {
+					#	visible = "[InDebugMode]"
+					#}
 
 					text_label_left = {
 						layoutpolicy_horizontal = expanding
@@ -3723,7 +4452,7 @@ types ruler_designer_types
 
 					item = {
 						button_trait_slot_entry = {
-							visible = "[And(Not(EqualTo_string( Trait.GetKey, VariableSystem.Get( 'ek_selected_furstock' ) ) ), Not(EqualTo_string( Trait.GetKey, VariableSystem.Get( 'ek_selected_birthsign' ) ) ) )]"
+							visible = "[And(And(Not(EqualTo_string( Trait.GetKey, VariableSystem.Get( 'ek_selected_furstock' ) ) ), Not(EqualTo_string( Trait.GetKey, VariableSystem.Get( 'ek_selected_birthsign' ) ) ) ), Not(Trait.IsTraitGroup( GetTraitGroup('base_arcana') ) ) )]"
 						}
 					}
 				}
@@ -3737,11 +4466,8 @@ types ruler_designer_types
 					visible = "[And( DataModelHasItems( TraitSlotArray.AccessSlots ), GreaterThan_int32( GetDataModelSize( TraitSlotArray.AccessSlots ), '(int32)6' ) )]"
 
 					item = {
-						#container = {
 							button_trait_slot_entry = {
-								visible = "[And(Not(EqualTo_string( Trait.GetKey, VariableSystem.Get( 'ek_selected_furstock' ) ) ), Not(EqualTo_string( Trait.GetKey, VariableSystem.Get( 'ek_selected_birthsign' ) ) ) )]"
-							}
-						#}
+								visible = "[And(And(Not(EqualTo_string( Trait.GetKey, VariableSystem.Get( 'ek_selected_furstock' ) ) ), Not(EqualTo_string( Trait.GetKey, VariableSystem.Get( 'ek_selected_birthsign' ) ) ) ), Not(Trait.IsTraitGroup( GetTraitGroup('base_arcana') ) ) )]"							}
 					}
 				}
 			}
@@ -3770,6 +4496,127 @@ types ruler_designer_types
 		}
 
 		expand = {}
+	}
+
+	type arcana_trait_button = hbox
+	{
+		datacontext = "[GetNullCharacter]"
+		datacontext = "[RulerDesignerWindow.AccessOtherTraitSlots]"
+		datamodel = "[TraitSlotArray.AccessSlots]"
+
+				
+
+		item = {
+
+			button_round = {
+				
+				datacontext = "[TraitSlot.GetTrait]"
+				visible = "[Trait.IsTraitGroup( GetTraitGroup('base_arcana') )]"
+
+				
+				size = { 28 28 }
+				onclick = "[TraitSlotArray.RemoveTrait( TraitSlot.Self )]"
+				onclick = "[TraitSlotArray.StartEditing]"
+
+				
+
+				block "arcana_on_click"
+				{
+					onclick = "[RulerDesignerWindow.FinishTraitEditing( GetTrait('base_arcana_1').Self ) ]"
+					onclick = "[VariableSystem.Set('ek_arcana','1')]"
+				}
+
+				
+				
+				block "icon"
+				{
+					button_plus_small = {
+						name = "increase_skill"
+						parentanchor = center
+						alwaystransparent = yes
+					}
+				}
+			}
+		}
+	}
+
+	type arcana_counter = widget
+	{
+		size = { 240 60 }
+
+		background = {
+			using = Background_Area
+		}
+
+		hbox = {
+
+			margin = { 7 0 }
+			spacing = 5
+
+			icon = {
+				name = "skill_icon"
+				texture = "gfx/interface/icons/icon_arcana.dds"
+				size = { 32 32 }
+				framesize = { 60 60 }
+				frame = "[RulerDesignerSkill.GetFrame]"
+			}
+
+			vbox = {
+				layoutpolicy_horizontal = expanding
+
+				text_single = {
+					name = "skill_name"
+					layoutpolicy_horizontal = expanding
+					text = "magicka_arcana"
+					autoresize = no
+				}
+
+				text_single = {
+					name = "skill_level"
+					layoutpolicy_horizontal = expanding
+					block "skill_level"
+					{
+						text = "ek_arcana_level"
+					}
+					default_format = "#weak"
+					autoresize = no
+				}
+			}
+
+			block "decrease_button"
+			{
+				button_round = {
+					size = { 28 28 }
+
+					button_minus_small = {
+						parentanchor = center
+						alwaystransparent = yes
+					}
+				}
+			}
+
+			text_single = {
+				text = "[VariableSystem.Get('ek_arcana')]"
+
+				using = Font_Size_Big
+				default_format = "#high"
+				align = nobaseline|center
+				min_width = 25
+			}
+
+			block "increase_button"
+			{
+				button_round = {
+					size = { 28 28 }
+					
+					button_plus_small = {
+						name = "increase_skill"
+						parentanchor = center
+						alwaystransparent = yes
+					}
+				}
+			}
+		}
 	}
 
 	type vbox_dynasty_edit_fields = vbox
@@ -4089,10 +4936,6 @@ types ruler_designer_types
 					}
 				}
 
-
-
-				
-
 				# hbox = {
 				# 	layoutpolicy_horizontal = expanding
 
@@ -4141,18 +4984,34 @@ types ruler_designer_types
 				# 	}
 				# }
 
+				# hbox = {
+				# 	layoutpolicy_horizontal = expanding
+
+				# 	text_single = {
+				# 		layoutpolicy_horizontal = expanding
+				# 		text = "ek_ethnicities_visible"
+				# 		margin_bottom = 5
+				# 	}
+
+				# 	text_single = {
+				# 		layoutpolicy_horizontal = expanding
+				# 		text = "[VariableSystem.Get( 'ek_ethnicities_visible' )]"
+				# 		margin_bottom = 5
+				# 	}
+				# }
+
 				hbox = {
 					layoutpolicy_horizontal = expanding
 
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "ek_ethnicities_visible"
+						text = "ek_arcana"
 						margin_bottom = 5
 					}
 
 					text_single = {
 						layoutpolicy_horizontal = expanding
-						text = "[VariableSystem.Get( 'ek_ethnicities_visible' )]"
+						text = "[VariableSystem.Get( 'ek_arcana' )]"
 						margin_bottom = 5
 					}
 				}

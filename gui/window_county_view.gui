@@ -1087,7 +1087,8 @@ window = {
 
 						button_standard = {
 							name = "toggle_find_vassal"
-							visible = "[And( And( ObjectsEqual( HoldingView.GetTitle.GetHolder, GetPlayer ), HoldingView.GetTitle.CanUseFindVassal( GetPlayer ) ), Not(HoldingView.GetTitle.IsLeasedOut))]"
+							visible = "[And( ObjectsEqual( HoldingView.GetTitle.GetHolder, GetPlayer ), Not(HoldingView.GetTitle.IsLeasedOut) )]"
+							enabled = "[HoldingView.CanGrantTitle]"
 							text = "FIND_VASSAL_HEADER"
 							onclick = "[HoldingView.ToggleFindVassalListWindow]"
 							tooltip = "FIND_VASSAL_BUTTON_HOLDING_VIEW_TOOLTIP"
@@ -1116,7 +1117,7 @@ window = {
 
 							hbox = {
 								layoutpolicy_horizontal = expanding
-
+								
 								container = {
 									name = "revoke_lease_button"
 									datacontext = "[HoldingView.GetTitle]"
@@ -1470,7 +1471,7 @@ window = {
 
 									progressbar_standard_transparent = {
 										layoutpolicy_horizontal = expanding
-
+										
 										size = { 0 10 }
 										value = "[HoldingView.GetGarrisonRatio]"
 										direction = horizontal
@@ -1762,7 +1763,7 @@ window = {
 													vbox = {
 														spacing = 5
 														layoutpolicy_horizontal = expanding
-
+														
 														text_single = {
 															layoutpolicy_horizontal = expanding
 															text = "[GUIPotentialBuildingItem.GetBuilding.GetTypeName]"
@@ -2634,9 +2635,9 @@ window = {
 	parentanchor = bottom|hcenter
 	position = { 40 -50 }
 	using = Animation_ShowHide_Quick
-
+	
 	using = Window_Background_Subwindow
-
+	
 	vbox = {
 		set_parent_size_to_minimum = yes
 		margin = { 4 4 }

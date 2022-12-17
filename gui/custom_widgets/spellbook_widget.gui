@@ -699,6 +699,41 @@ window = {
 				}
 			}
 
+			hbox = {
+				name = "size_select_dropdown"
+				visible = "[DataModelHasItems(GetPlayer.MakeScope.GetList('spell_size'))]"
+				size = { 0 30 }
+
+				dropdown_menu_standard = {
+					blockoverride "dropdown_properties"
+					{
+						datamodel = "[GetPlayer.MakeScope.GetList('spell_size')]" #if these fail, can have sys var of selection and check for it changing in the active item section
+						onselectionchanged = "[PdxGuiWidget.FindChild('active_size').TriggerAnimation('select_size')]" # in active_item. set var to string
+
+						#selectedindex = "[BattleSummaryWindow.GetSoldiersSortIndex]" #uses CVector2i. no go
+					}
+					blockoverride "dropdown_active_item_properties"
+					{
+						name = "active_size"
+						text = "[Localize( Concatenate( 'game_concept', GetPlayer.MakeScope.Var('spell_selected_size').GetFlagName ) )]"
+
+						state = {
+							name = "select_size"
+							on_start = "[GetScriptedGui('spell_select_size').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).AddScope('size', MakeScopeFlag(Scope.GetFlagName) ).End) )]"
+						}
+					}
+					blockoverride "dropdown_item_properties"
+					{
+						text = "[Localize( Concatenate( 'game_concept', Scope.GetFlagName ) )]"
+					}
+					blockoverride "dropdown_list_properties"
+					{
+						position = { 5 -2 }
+						widgetanchor = bottom
+					}
+				}
+			}
+
 			### Send Button
 			button_primary = {
 				name = "send_offer_button"
@@ -2282,6 +2317,7 @@ Template ButtonSpellList {
 	widget = {
 		size = { 130 40 }
 		parentanchor = right
+		
 		position = { -50 0 }
 		text_single = {
 			name = "spell_cost"
