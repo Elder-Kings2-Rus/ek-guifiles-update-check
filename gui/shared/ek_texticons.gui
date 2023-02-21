@@ -26,3 +26,32 @@ texticon = {
 	}
 }
 
+
+#mapmodes
+texticon = {
+	icon = ek_special_buildings_has_building
+	iconsize = {
+		texture = "gfx/interface/colors/special_building_present.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+texticon = {
+	icon = ek_special_buildings_has_building_slot
+	iconsize = {
+		texture = "gfx/interface/colors/special_building_slot.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+texticon = {
+	icon = ek_holy_site_color
+	iconsize = {
+		texture = "gfx/interface/colors/holy_site.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}

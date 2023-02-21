@@ -55,6 +55,7 @@ window = {
 				
 				### EK EDIT: Added a vbox with the text multi
 				vbox = {
+					layoutpolicy_horizontal = expanding
 					### Feudalism: CA dictates which vassals can join the council
 					text_multi = {
 						visible = "[GetPlayer.GetGovernment.IsType('feudal_government')]"

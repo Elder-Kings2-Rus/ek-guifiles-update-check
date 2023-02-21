@@ -392,6 +392,21 @@
 
 					tooltip = nativity_regions_mapmode_tooltip
 					using = tooltip_above
+
+					icon = {
+						texture = "gfx/interface/icons/culture_pillars/heritage_diverge.dds"
+						size = { 30 30 }
+						parentanchor = center
+						modify_texture = {
+							texture = "gfx/interface/colors/colors_textured.dds"
+							blend_mode = add
+							framesize = { 96 96 }
+				
+							block "master_color_frame" {
+								frame = 1
+							}
+						}
+					}
 				}
 				button_round = {
 					name = "map_mode_special_buildings"
@@ -402,6 +417,20 @@
 
 					tooltip = special_buildings_mapmode_tooltip
 					using = tooltip_above
+
+					icon = {
+						texture = "gfx/interface/icons/focuses/stewardship_domain_focus.dds"
+						size = { 32 32 }
+						modify_texture = {
+							texture = "gfx/interface/colors/colors_textured.dds"
+							blend_mode = add
+							framesize = { 96 96 }
+				
+							block "master_color_frame" {
+								frame = 1
+							}
+						}
+					}
 				}
 				button_round = {
 					name = "map_mode_holy_sites"
@@ -412,6 +441,20 @@
 
 					tooltip = holy_sites_mapmode_tooltip
 					using = tooltip_above
+
+					icon = {
+						texture = "gfx/interface/icons/focuses/learning_theology_focus.dds"
+						size = { 32 32 }
+						modify_texture = {
+							texture = "gfx/interface/colors/colors_textured.dds"
+							blend_mode = add
+							framesize = { 96 96 }
+				
+							block "master_color_frame" {
+								frame = 1
+							}
+						}
+					}
 				}
 			}
 		}
