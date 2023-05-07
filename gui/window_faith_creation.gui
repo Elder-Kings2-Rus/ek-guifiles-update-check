@@ -805,27 +805,27 @@ window = {
 							}
 						}
 
-						vbox = {
-							name = "old_faith_tolerance"
-							layoutpolicy_horizontal = expanding
+						#vbox = { this part of the faith creation GUI was lying to players, uncomment if able to extract the actual value
+						#	name = "old_faith_tolerance"
+						#	layoutpolicy_horizontal = expanding
+						
+						#	text_label_left = {
+						#		name = "header"
+						#		layoutpolicy_horizontal = expanding
+						#		text = "FAITH_CREATION_TOLERANCE"
+						#		default_format = "#low"
+						#	}
 
-							text_label_left = {
-								name = "header"
-								layoutpolicy_horizontal = expanding
-								text = "FAITH_CREATION_TOLERANCE"
-								default_format = "#low"
-							}
+						#	expand = {
+						#		size = { 0 10 }
+						#	}
 
-							expand = {
-								size = { 0 10 }
-							}
-
-							text_single = {
-								name = "desc"
-								layoutpolicy_horizontal = expanding
-								text = "FAITH_CREATION_TOLERANCE_TEXT"
-							}
-						}
+						#	text_single = {
+						#		name = "desc"
+						#		layoutpolicy_horizontal = expanding
+						#		text = "FAITH_CREATION_TOLERANCE_TEXT"
+						#	}
+						#}
 
 
 						vbox = {
