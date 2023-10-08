@@ -898,7 +898,7 @@ window = {
 							name = "theocracy_info"
 							layoutpolicy_horizontal = expanding
 							layoutpolicy_vertical = expanding
-							visible = "[Not( ObjectsEqual( GetPlayer.GetFaith.HasParameterByKey( 'lay_clergy' ), FaithCreationWindow.HasParameter( 'lay_clergy' ) ) ) )]"
+							visible = "[Not( ObjectsEqual( GetPlayer.GetFaith.HasParameterByKey( 'lay_clergy' ), FaithCreationWindow.HasParameter( 'lay_clergy' ) ) )]"
 
 							text_label_left = {
 								layoutpolicy_horizontal = expanding
@@ -1042,9 +1042,9 @@ window = {
 								using = Status_Bad
 							}
 						}
-					}	
-					
-					spacer = { size = {0 10}}					
+					}
+
+					spacer = { size = {0 10}}
 
 					text_multi = {
 						align = center
@@ -1121,7 +1121,7 @@ window = {
 								text = "FAITH_CREATION_NAMING_NAME"
 							}
 
-							blockoverride "editbox_properties" 
+							blockoverride "editbox_properties"
 							{
 								name = "faith_name_edit"
 							    ontextedited = "[FaithCreationWindow.OnEditName]"
@@ -1139,7 +1139,7 @@ window = {
 								text = "FAITH_CREATION_NAMING_ADJECTIVE"
 							}
 
-							blockoverride "editbox_properties" 
+							blockoverride "editbox_properties"
 							{
 								name = "faith_adjective_edit"
 							    ontextedited = "[FaithCreationWindow.OnEditAdjective]"
@@ -1158,7 +1158,7 @@ window = {
 								text = "FAITH_CREATION_NAMING_FOLLOWER"
 							}
 
-							blockoverride "editbox_properties" 
+							blockoverride "editbox_properties"
 							{
 								name = "faith_adherent_edit"
 							    ontextedited = "[FaithCreationWindow.OnEditAdherent]"

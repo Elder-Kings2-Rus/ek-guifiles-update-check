@@ -2,12 +2,13 @@
 ######################################################
 ################# ADD MEN-AT-ARMS ####################
 ######################################################
+#EK EDIT: siege values visible for normal MaA, as well as some size changes
 
 window = {
 	name = "menatarmstype_view"
 	parentanchor = top|right
 	position = { -610 70 }
-	size = { 470 880 }
+	size = { 520 980 }
 	movable = no
 	layer = middle
 
@@ -30,7 +31,7 @@ window = {
 
 	vbox = {
 		using = Window_Margins
-		set_parent_size_to_minimum = yes
+		# set_parent_size_to_minimum = yes
 
 		state = {
 			name = "menatarms_details_refresh"
@@ -237,36 +238,41 @@ window = {
 						layoutpolicy_horizontal = expanding
 					}
 
-					spacer = {
-						size = { 10 46 }
-					}
-
-					text_label_center = {
-						text = "MV_REGIMENT_START_SIZE"
-					}
-
-					spacer = {
-						size = { 10 10 }
-					}
-
-					button_primary = {
-						size = { 200 40 }
-						text = "[MenAtArmsTypeView.GetCostString( GetPlayer )]"
-						onclick = "[MenAtArmsTypeView.Create]"
-						enabled = "[MenAtArmsTypeView.CanCreate]"
-						tooltip = "[MenAtArmsTypeView.GetCreateTooltip]"
-
-						background = {
-							using = Background_Area
+					vbox = {
+						margin_bottom = 15
+						layoutpolicy_vertical = expanding
+		
+						text_label_center = {
+							text = "[MenAtArmsType.GetReinforcementCostString( GetPlayer )]"
+						}
+		
+						text_label_center = {
+							text = "[MenAtArmsType.GetFullStrengthMaintenanceCostForPlayerString]"
+						}
+		
+						text_label_center = {
+							text = "MV_REGIMENT_START_SIZE"
+						}
+		
+						button_primary = {
+							size = { 200 40 }
+							text = "[MenAtArmsTypeView.GetCostString( GetPlayer )]"
+							onclick = "[MenAtArmsTypeView.Create]"
+							enabled = "[MenAtArmsTypeView.CanCreate]"
+							tooltip = "[MenAtArmsTypeView.GetCreateTooltip]"
+		
+							background = {
+								using = Background_Area
+							}
 						}
 					}
 
-					spacer = {
-						size = { 10 10 }
-					}
+					expand = { }
 				}
 			}
 		}
+
+		expand = {}
 	}
 }
 
@@ -276,9 +282,10 @@ window = {
 
 types MenAtArms
 {
-	type vbox_maa_stats_numbers = vbox {
+	# Requires MenAtArmsType and Province data context
+	type vbox_maa_stats_numbers_base = vbox {
 		vbox = {
-			visible = "[GreaterThan_CFixedPoint(MenAtArmsType.GetStat( GetPlayer, 'siege_value' ), '(CFixedPoint)0' )]" # EK-specific
+			visible = "[Not( MenAtArmsType.FightsInMainPhase )]"
 			layoutpolicy_horizontal = expanding
 			margin = { 15 0 }
 			margin_bottom = 5
@@ -300,7 +307,10 @@ types MenAtArms
 				margin_left = -5
 
 				icon = {
-					size = { 55 55 }
+					block "siege_icon_size"
+					{
+						size = { 55 55 }
+					}
 					texture = "gfx/interface/icons/regimenttypes/unit_stat_siege_progress.dds"
 				}
 
@@ -317,11 +327,14 @@ types MenAtArms
 				expand = {}
 			}
 
-			text_single = {
-				layoutpolicy_horizontal = expanding
-				name = "siege_tier"
-				text = "REGIMENT_SIEGE_MAX_FORT_LEVEL"
-				align = left
+			block "siege_effective_level"
+			{
+				text_single = {
+					layoutpolicy_horizontal = expanding
+					name = "siege_tier"
+					text = "REGIMENT_SIEGE_MAX_FORT_LEVEL"
+					align = left
+				}
 			}
 		}
 
@@ -335,6 +348,41 @@ types MenAtArms
 				using = Background_Area
 			}
 
+			block "stat_spacing"
+			{
+			}
+
+			hbox = {
+				#EK EDIT: siege values also visible for normal MaA if value > 0
+				layoutpolicy_horizontal = expanding
+				visible = "[GreaterThan_CFixedPoint( MenAtArmsType.GetStat( GetPlayer, Province.Self, 'siege_value' ),'(CFixedPoint)0')]"
+				block "siege_tt"
+				{
+					tooltip = "REGIMENT_SIEGE_TT"
+				}
+				using = tooltip_se
+				spacing = 3
+				margin_left = -5
+
+				icon = {
+					block "siege_icon_size"
+					{
+						size = { 55 55 }
+					}
+					texture = "gfx/interface/icons/regimenttypes/unit_stat_siege_progress.dds"
+				}
+
+				text_single = {
+					block "siege_stat"
+					{
+						text = "REGIMENT_SIEGE"
+					}
+					using = Font_Size_Medium
+					align = nobaseline
+					min_width = 25
+				}
+			}
+
 			hbox = {
 				block "damage_tt"
 				{
@@ -345,7 +393,10 @@ types MenAtArms
 
 				icon = {
 					name = "icon"
-					size = { 40 40 }
+					block "stat_icon_size"
+					{
+						size = { 40 40 }
+					}
 					texture = "gfx/interface/icons/regimenttypes/unit_stat_damage.dds"
 				}
 
@@ -353,7 +404,7 @@ types MenAtArms
 					name = "label"
 					block "damage_stat"
 					{
-						text = "[MenAtArmsType.GetStat( GetPlayer, 'damage' )|0]"
+						text = "[MenAtArmsType.GetStat( GetPlayer, Province.Self, 'damage' )|0]"
 					}
 					default_format = "#high"
 					using = Font_Size_Medium
@@ -372,7 +423,10 @@ types MenAtArms
 
 				icon = {
 					name = "icon"
-					size = { 40 40 }
+					block "stat_icon_size"
+					{
+						size = { 40 40 }
+					}
 					texture = "gfx/interface/icons/regimenttypes/unit_stat_toughness.dds"
 				}
 
@@ -380,7 +434,7 @@ types MenAtArms
 					name = "label"
 					block "toughness_stat"
 					{
-						text = "[MenAtArmsType.GetStat( GetPlayer, 'toughness' )|0]"
+						text = "[MenAtArmsType.GetStat( GetPlayer, Province.Self, 'toughness' )|0]"
 					}
 					default_format = "#high"
 					using = Font_Size_Medium
@@ -394,7 +448,7 @@ types MenAtArms
 				{
 					tooltip = "REGIMENT_PURSUIT_TT"
 					# fade out if 0
-					alpha = "[Select_float(GreaterThan_CFixedPoint(MenAtArmsType.GetStat( GetPlayer, 'pursuit' ),'(CFixedPoint)0'), '(float)1.0','(float)0.4'))]"
+					alpha = "[Select_float(GreaterThan_CFixedPoint(MenAtArmsType.GetStat( GetPlayer, Province.Self, 'pursuit' ),'(CFixedPoint)0'), '(float)1.0','(float)0.4')]"
 				}
 				using = tooltip_se
 				spacing = 3
@@ -402,7 +456,10 @@ types MenAtArms
 
 				icon = {
 					name = "icon"
-					size = { 40 40 }
+					block "stat_icon_size"
+					{
+						size = { 40 40 }
+					}
 					texture = "gfx/interface/icons/regimenttypes/unit_stat_pursuit.dds"
 				}
 
@@ -410,7 +467,7 @@ types MenAtArms
 					name = "label"
 					block "pursuit_stat"
 					{
-						text = "[MenAtArmsType.GetStat( GetPlayer, 'pursuit' )|0]"
+						text = "[MenAtArmsType.GetStat( GetPlayer, Province.Self, 'pursuit' )|0]"
 					}
 					default_format = "#high"
 					using = Font_Size_Medium
@@ -424,14 +481,17 @@ types MenAtArms
 				{
 					tooltip = "REGIMENT_SCREEN_TT"
 					# fade out if 0
-					alpha = "[Select_float(GreaterThan_CFixedPoint(MenAtArmsType.GetStat( GetPlayer, 'screen' ),'(CFixedPoint)0'), '(float)1.0','(float)0.4'))]"
+					alpha = "[Select_float(GreaterThan_CFixedPoint(MenAtArmsType.GetStat( GetPlayer, Province.Self, 'screen' ),'(CFixedPoint)0'), '(float)1.0','(float)0.4')]"
 				}
 				using = tooltip_se
 				spacing = 3
 
 				icon = {
 					name = "icon"
-					size = { 40 40 }
+					block "stat_icon_size"
+					{
+						size = { 40 40 }
+					}
 					texture = "gfx/interface/icons/regimenttypes/unit_stat_screen.dds"
 				}
 
@@ -439,7 +499,7 @@ types MenAtArms
 					name = "label"
 					block "screen_stat"
 					{
-						text = "[MenAtArmsType.GetStat( GetPlayer, 'screen' )|0]"
+						text = "[MenAtArmsType.GetStat( GetPlayer, Province.Self, 'screen' )|0]"
 					}
 					default_format = "#high"
 					using = Font_Size_Medium
@@ -448,6 +508,24 @@ types MenAtArms
 				}
 			}
 		}
+		block "siege_effective_level"
+		{
+			
+			text_single = {
+				visible = "[GreaterThan_CFixedPoint( MenAtArmsType.GetStat( GetPlayer, Province.Self, 'siege_value' ),'(CFixedPoint)0')]"
+				layoutpolicy_horizontal = expanding
+				name = "siege_tier"
+				text = "REGIMENT_SIEGE_MAX_FORT_LEVEL"
+				align = left
+				margin_left = 15
+			}
+		}
+	}
+
+	# Requires MenAtArmsType data context
+	type vbox_maa_stats_numbers = vbox_maa_stats_numbers_base
+	{
+		datacontext = "[GetNullProvince]"
 	}
 
 	type hbox_maa_type_text = hbox {
@@ -541,12 +619,13 @@ types MenAtArms
 
 		hbox = {
 			layoutpolicy_horizontal = expanding
+			layoutpolicy_vertical = expanding
 			visible = "[Not(IsDataModelEmpty(MenAtArmsType.GetTerrainModifiers))]"
-
-			hbox = {
-				name = "terrain_grid"
+			
+			dynamicgridbox = {
+				flipdirection = yes
 				datamodel = "[MenAtArmsType.GetTerrainModifiers]"
-				spacing = 5
+				datamodel_wrap = 10
 
 				item = {
 					icon = {
@@ -574,7 +653,6 @@ types MenAtArms
 					}
 				}
 			}
-
 			expand = {}
 		}
 
@@ -624,7 +702,7 @@ types MenAtArms
 					visible = "[MenAtArmsType.HasWinterHarshModifier]"
 				}
 				blockoverride "maa_has_winter_effect" {
-					visible = "[Not( MenAtArmsType.GetWinterHarshModifier.IsPositive ) )]"
+					visible = "[Not( MenAtArmsType.GetWinterHarshModifier.IsPositive )]"
 					texture = "gfx/interface/icons/terrain_types/winter_harsh.dds"
 					tooltip = "REGIMENT_WINTER_HARSH_MODIFIER_TOOLTIP"
 				}
@@ -635,7 +713,7 @@ types MenAtArms
 					visible = "[MenAtArmsType.HasWinterNormalModifier]"
 				}
 				blockoverride "maa_has_winter_effect" {
-					visible = "[Not( MenAtArmsType.GetWinterNormalModifier.IsPositive ) )]"
+					visible = "[Not( MenAtArmsType.GetWinterNormalModifier.IsPositive )]"
 					texture = "gfx/interface/icons/terrain_types/winter_normal.dds"
 					tooltip = "REGIMENT_WINTER_NORMAL_MODIFIER_TOOLTIP"
 				}
@@ -668,18 +746,6 @@ types MenAtArms
 			}
 
 			expand = {}
-
-			vbox = {
-				margin_bottom = 15
-
-				text_label_center = {
-					text = "[MenAtArmsType.GetReinforcementCostString( GetPlayer )]"
-				}
-
-				text_label_center = {
-					text = "[MenAtArmsType.GetFullStrengthMaintenanceCostForPlayerString]"
-				}
-			}
 		}
 	}
 

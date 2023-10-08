@@ -214,7 +214,7 @@ window = {
 								visible = "[Lifestyle.IsHighlightedForCharacter( Character.Self )]"
 								layoutpolicy_horizontal = expanding
 								size = { 100 80 }
-								margin = { 5 0 }
+								margin = { 10 0 }
 								text = "[Lifestyle.GetHighlightDescription]"
 								align = center
 
@@ -295,6 +295,7 @@ window = {
 		allow_outside = no
 
 		portrait_lifestyles = {
+			alwaystransparent = "[Not(Lifestyle.IsValid)]"
 			parentanchor = bottom|left
 			position = { -110 0 }
 		}

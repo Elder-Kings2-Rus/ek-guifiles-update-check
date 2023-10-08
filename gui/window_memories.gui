@@ -65,7 +65,7 @@ window = {
 			datacontext = "[GetIllustration( 'character_private' )]"
 
 			background = {
-				texture = "[Illustration.GetTexture( Character.Self )]"
+				texture = "[Illustration.GetTexture( Character.MakeScope )]"
 				margin = { -5 0 }
 				fittype = centercrop
 				alpha = 1
@@ -223,6 +223,11 @@ window = {
 											alpha = 0.4
 										}
 
+										watch_window_button = {
+											size = { 60 20 }
+											onclick = "[AddWatchWindow( CharacterMemory.MakeScope )]"
+										}
+
 										vbox = {
 											size = { 26 26 }
 											margin_top = 3
@@ -238,13 +243,14 @@ window = {
 										}
 
 										text_multi = {
-											max_width = 340
+											max_width = 440
 											autoresize = yes
 											align = left
 											text = "MEMORIES_WINDOW_ENTRY"
 											margin_right = 5
 											elide = right
 											default_format = "#light_background"
+											using = Text_Light_Background_Overrides
 										}
 
 										expand = {}

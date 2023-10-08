@@ -1,4 +1,4 @@
-### EK icons
+﻿### EK icons
 texticon = {
 	icon = domain_icon
 	iconsize = {
@@ -25,6 +25,137 @@ texticon = {
 		texture = "gfx/interface/icons/icon_liege.dds"
 		size = { 30 30 }
 		offset = { 0 3 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = necromancy_icon
+	iconsize = {
+		texture = "gfx/interface/icons/icon_necromancy.dds"
+		size = { 25 25 }
+		offset = { 0 3 }
+		fontsize = 16
+	}
+}
+
+# MAA icons
+texticon = {
+	icon = mages_icon
+	iconsize = {
+		texture = "gfx/interface/icons/regimenttypes/mages.dds"
+		size = { 25 25 }
+		offset = { 0 3 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = spellswords_icon
+	iconsize = {
+		texture = "gfx/interface/icons/regimenttypes/spellswords.dds"
+		size = { 25 25 }
+		offset = { 0 3 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = dragon_icon
+	iconsize = {
+		texture = "gfx/interface/icons/regimenttypes/dragon.dds"
+		size = { 25 25 }
+		offset = { 0 3 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = risen_dead_icon
+	iconsize = {
+		texture = "gfx/interface/icons/regimenttypes/risen_dead.dds"
+		size = { 25 25 }
+		offset = { 0 3 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = undead_dragon_icon
+	iconsize = {
+		texture = "gfx/interface/icons/regimenttypes/undead_dragon.dds"
+		size = { 25 25 }
+		offset = { 0 3 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = armored_legionaires_icon
+	iconsize = {
+		texture = "gfx/interface/icons/regimenttypes/armored_legionaires.dds"
+		size = { 25 25 }
+		offset = { 0 3 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = akaviri_dragon_hunters_icon
+	iconsize = {
+		texture = "gfx/interface/icons/regimenttypes/akaviri_dragon_hunters.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = swordmasters_icon
+	iconsize = {
+		texture = "gfx/interface/icons/regimenttypes/swordmasters.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = summerset_justiciars_icon
+	iconsize = {
+		texture = "gfx/interface/icons/regimenttypes/summerset_justiciars.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = ashlander_champions_icon
+	iconsize = {
+		texture = "gfx/interface/icons/regimenttypes/ashlander_champions.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = orc_marauders_icon
+	iconsize = {
+		texture = "gfx/interface/icons/regimenttypes/orc_marauders.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = inspiration_icon
+	iconsize = {
+		texture = "gfx/interface/icons/inspirations/_default.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
 		fontsize = 16
 	}
 }

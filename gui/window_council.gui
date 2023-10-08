@@ -76,8 +76,9 @@ window = {
 							layoutpolicy_horizontal = expanding
 							text = "COUNCIL_WINDOW_PLAYER_COUNCIL"
 
-							down = "[CouncilWindow.IsPlayerCouncilShown]"
-							onclick = "[CouncilWindow.SetPlayerCouncil]"
+							down = "[And( CouncilWindow.IsPlayerCouncilShown, Not( GetVariableSystem.Exists( 'diarchy_tab' ) ) )]"
+						onclick = "[CouncilWindow.SetPlayerCouncil]"
+						onclick = "[GetVariableSystem.Clear( 'diarchy_tab' )]"
 
 							# onclick = "[PdxGuiTriggerAllAnimations('council_refresh')]"
 
@@ -121,7 +122,7 @@ window = {
 
 					vbox_council_layout = {
 						name = "my_council"
-						visible = "[CouncilWindow.IsPlayerCouncilShown]"
+						visible = "[And( CouncilWindow.IsPlayerCouncilShown, Not( GetVariableSystem.Exists( 'diarchy_tab' ) ) )]"
 
 						using = Animation_Tab_Switch
 					}
@@ -129,7 +130,7 @@ window = {
 
 					vbox_council_layout = {
 						name = "council_refresh"
-						visible = "[CouncilWindow.IsLiegeCouncilShown]"
+						visible = "[And( CouncilWindow.IsLiegeCouncilShown, Not( GetVariableSystem.Exists( 'diarchy_tab' ) ) )]"
 
 						using = Animation_Tab_Switch
 
@@ -1230,7 +1231,7 @@ types CouncilTaskTypes
 					datacontext = "[GetIllustration( 'religion_interior' )]"
 
 					background =  {
-						texture = "[Illustration.GetTextureForFaith( ActiveCouncilTask.GetCouncillor.GetFaith )]"
+						texture = "[Illustration.GetTexture( ActiveCouncilTask.GetCouncillor.GetFaith.MakeScope )]"
 						fittype = centercrop
 						alpha = 0.7
 						using = Mask_Rough_Edges

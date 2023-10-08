@@ -7,6 +7,7 @@
 		fontsize = 16
 	}
 }
+
 texticon = {
 	icon = skill_arcana_icon
 	iconsize = {
@@ -16,12 +17,33 @@ texticon = {
 		fontsize = 16
 	}
 }
+
 texticon = {
 	icon = magicka_icon
 	iconsize = {
 		texture = "gfx/interface/icons/icon_magicka.dds"	
 		size = { 25 25 }
 		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = spellbook_icon
+	iconsize = {
+		texture = "gfx/interface/icons/icon_spellbook.dds"
+		size = { 25 25 }
+		offset = { 0 3 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = ek_dragon
+	iconsize = {
+		texture = "gfx/interface/icons/icon_septim_dragon_main_logo.dds"
+		size = { 25 25 }
+		offset = { 0 3 }
 		fontsize = 16
 	}
 }
@@ -50,6 +72,66 @@ texticon = {
 	icon = ek_holy_site_color
 	iconsize = {
 		texture = "gfx/interface/colors/holy_site.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = skill_prowess_icon
+	iconsize = {
+		texture = "gfx/interface/icons/icon_prowess.dds"	
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = skill_martial_icon
+	iconsize = {
+		texture = "gfx/interface/icons/message_feed/martial.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = skill_learning_icon
+	iconsize = {
+		texture = "gfx/interface/icons/message_feed/learning.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = skill_diplomacy_icon
+	iconsize = {
+		texture = "gfx/interface/icons/message_feed/diplomacy.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = skill_intrigue_icon
+	iconsize = {
+		texture = "gfx/interface/icons/message_feed/intrigue.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = skill_stewardship_icon
+	iconsize = {
+		texture = "gfx/interface/icons/message_feed/stewardship.dds"	
 		size = { 25 25 }
 		offset = { 0 6 }
 		fontsize = 16
