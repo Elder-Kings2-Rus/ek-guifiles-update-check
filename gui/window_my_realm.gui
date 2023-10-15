@@ -69,7 +69,7 @@ window = {
 					}
 
 					vbox = {
-						margin_top = 42
+						margin_top = 32
 						margin_bottom = 10
 
 						hbox = {
@@ -78,11 +78,13 @@ window = {
 							text_single = {
 								name = "realm_type"
 								text = "MY_REALM_WINDOW_TYPE"
+								fontsize = 12
 							}
 
 							text_single = {
 								text = "REALM_WINDOW_SIZE"
 								tooltip = "REALM_WINDOW_SIZE_TT"
+								fontsize = 12
 							}
 
 							### EK EDIT: CA for EK governments is tied to something
@@ -91,6 +93,7 @@ window = {
 								visible = "[Character.GetGovernment.IsType('autocracy_government')]"
 								text = "VASSAL_POWER_SHARE"
 								tooltip = "VASSAL_POWER_SHARE_TT"
+								fontsize = 12
 								align = center|center
 							}
 							# Hierocracy: Faith land share
@@ -101,6 +104,8 @@ window = {
 								align = center|center
 							}
 						}
+
+						
 
 						spacer = {
 							visible = "[GetPlayer.HasLiege]"

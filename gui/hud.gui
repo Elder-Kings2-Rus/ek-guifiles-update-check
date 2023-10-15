@@ -5332,7 +5332,7 @@ types HUD
 						onclick = "[ToggleGameView('my_realm')]"
 
 						background = {
-							visible = "[GreaterThan_int32( Character.GetDomainSize, Character.GetDomainLimit )]"
+							visible = "[GreaterThan_int32( Character.GetNumVassalsTowardsLimit, Character.GetVassalLimit )]"
 							using = Status_Bad
 							margin_bottom = -3
 						}

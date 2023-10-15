@@ -425,6 +425,7 @@ window = {
 					align = center|nobaseline
 					onclick = "[CharacterWindow.OnCopyPortrait]"
 					#visible = "[IsGameViewOpen('portrait_editor')]"
+					visible = "[InDebugMode]"
 					fontcolor = { 1.0 1.0 1.0 1.0 }
 				}
 			}

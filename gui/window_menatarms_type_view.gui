@@ -31,7 +31,7 @@ window = {
 
 	vbox = {
 		using = Window_Margins
-		# set_parent_size_to_minimum = yes
+		set_parent_size_to_minimum = yes
 
 		state = {
 			name = "menatarms_details_refresh"
@@ -377,6 +377,7 @@ types MenAtArms
 					{
 						text = "REGIMENT_SIEGE"
 					}
+					default_format = "#high"
 					using = Font_Size_Medium
 					align = nobaseline
 					min_width = 25
