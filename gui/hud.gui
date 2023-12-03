@@ -5690,6 +5690,35 @@ types Astronomy
 							align = left
 						}
 					}
+					divider_light = {
+						layoutpolicy_horizontal = growing
+						visible = "[GetScriptedGui('lunar_cycle_third_moon').IsShown(GuiScope.End)]" 
+					}
+					hbox = {
+						visible = "[GetScriptedGui('lunar_cycle_third_moon').IsShown(GuiScope.End)]"
+
+						spacing = 2
+						layoutpolicy_horizontal = expanding
+						vbox = {
+							name = "third_moon"
+							size = { 64 64 }
+							icon = {
+								texture = "gfx/interface/icons/lunar_cycle/moon_secunda.dds"
+								size = { 64 64 }
+							}
+						}
+						divider_light = {
+							layoutpolicy_vertical = growing
+						}
+						spacer = {
+							size = { 4 0 }
+						}
+						text_single = {
+							layoutpolicy_horizontal = growing
+							text = "third_moon_desc"
+							align = left
+						}
+					}
 				}
 			}
 		}
