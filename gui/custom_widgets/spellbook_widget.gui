@@ -1515,7 +1515,7 @@ Types Spells
 												size = { 180 -1 }
 												autoresize = yes
 												max_width = 200
-												text = "[StaticModifier.GetDesc]"
+												text = "[StaticModifier.GetDescWithEffects]"
 											}
 										}
 									}

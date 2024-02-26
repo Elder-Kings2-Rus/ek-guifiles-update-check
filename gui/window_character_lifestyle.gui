@@ -634,7 +634,7 @@ window = {
 								down = "[EqualTo_string( FocusType.GetKey, Character.GetFocus.GetKey )]"
 								onclick = "[CharacterLifestyleWindow.SelectFocus( FocusType.Self )]"
 								alwaystransparent = "[EqualTo_string( FocusType.GetKey, Character.GetFocus.GetKey )]"
-								tooltip = "[Select_CString( CharacterLifestyleWindow.CanSelectFocus( FocusType.Self ), '', CharacterLifestyleWindow.CanSelectFocusDesc( FocusType.Self ) )]"
+
 
 								blockoverride "disabled" {}
 
@@ -911,7 +911,7 @@ window = {
 									value = "[FixedPointToFloat( Character.GetLifestyleXp( Lifestyle.Self, '(bool)yes' ) )]"
 
 									progresstexture = "gfx/interface/progressbars/progress_standard.dds"
-									noprogresstexture = "gfx/interface/progressbars/progress_standard_transparent.dds"
+									noprogresstexture = "gfx/interface/progressbars/progress_blue.dds"
 
 									tooltip = "LIFESTYLE_XP_TOOLTIP"
 									using = tooltip_below
@@ -927,7 +927,7 @@ window = {
 									value = "[FixedPointToFloat( Character.GetLifestyleXp( Lifestyle.Self, '(bool)yes' ) )]"
 
 									progresstexture = "gfx/interface/progressbars/progress_standard.dds"
-									noprogresstexture = "gfx/interface/progressbars/progress_standard_transparent.dds"
+									noprogresstexture = "gfx/interface/progressbars/progress_blue.dds"
 
 									tooltip = "LIFESTYLE_XP_TOOLTIP"
 									using = tooltip_below

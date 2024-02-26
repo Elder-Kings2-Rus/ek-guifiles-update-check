@@ -843,9 +843,8 @@ widget = {
 	}
 
 	clickable_version_number = {
-
 		parentanchor = bottom|right
-		position = { -25 -25 }
+		position = { -15 -15 }
 
 		using = tooltip_se
 
@@ -853,8 +852,6 @@ widget = {
 		{
 
 		}
-
-
 	}
 
 	error_horse = {
@@ -868,7 +865,7 @@ widget = {
 		tooltip = "[GetLoadedMods]"
 		position = { -120 -85 }
 	}
-	
+
 	widget = {
 		parentanchor = bottom|left
 		size = { 800 100 }
@@ -950,3 +947,4 @@ widget = {
 		}
 	}
 }
+

@@ -51,9 +51,9 @@ texticon = {
 }
 
 texticon = {
-	icon = spellswords_icon
+	icon = spellblades_icon
 	iconsize = {
-		texture = "gfx/interface/icons/regimenttypes/spellswords.dds"
+		texture = "gfx/interface/icons/regimenttypes/spellblades.dds"
 		size = { 25 25 }
 		offset = { 0 3 }
 		fontsize = 16
@@ -94,6 +94,46 @@ texticon = {
 	icon = armored_legionaires_icon
 	iconsize = {
 		texture = "gfx/interface/icons/regimenttypes/armored_legionaires.dds"
+		size = { 25 25 }
+		offset = { 0 3 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = equestrian_brigade_icon
+	iconsize = {
+		texture = "gfx/interface/icons/regimenttypes/equestrian_brigade.dds"
+		size = { 25 25 }
+		offset = { 0 3 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = ut_nibenu_bowmen_icon
+	iconsize = {
+		texture = "gfx/interface/icons/regimenttypes/ut_nibenu_bowmen.dds"
+		size = { 25 25 }
+		offset = { 0 3 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = nord_housecarl_icon
+	iconsize = {
+		texture = "gfx/interface/icons/regimenttypes/nord_housecarl.dds"
+		size = { 25 25 }
+		offset = { 0 3 }
+		fontsize = 16
+	}
+}
+
+texticon = {
+	icon = skaal_hunter
+	iconsize = {
+		texture = "gfx/interface/icons/regimenttypes/skaal_hunter.dds"
 		size = { 25 25 }
 		offset = { 0 3 }
 		fontsize = 16

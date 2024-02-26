@@ -167,7 +167,7 @@ window = {
 
 												text_single = {
 													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
-													visible = "[Not(ModifyVassalContractInteractionWindowObligationLevelOption.IsSelected)]"
+													visible = "[Not( ModifyVassalContractInteractionWindow.IsObligationLevelSelected( ModifyVassalContractInteractionWindowObligationLevelOption.Self ) )]"
 													default_format = "#light_background"
 													parentanchor = center
 													position = {0 -3 }
@@ -175,22 +175,23 @@ window = {
 
 												text_single = {
 													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
-													visible = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsSelected]"
+													visible = "[ModifyVassalContractInteractionWindow.IsObligationLevelSelected( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
 													default_format = "#high"
 													parentanchor = center
 													position = {0 -3 }
 												}
 
-												tooltip = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetTooltip]"
+												tooltip = "[ModifyVassalContractInteractionWindow.GetObligationLevelTooltipFor( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
 
-												onclick = "[ModifyVassalContractInteractionWindowObligationLevelOption.Select]"
-												down = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsSelected]"
-												enabled = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled]"
+												onclick = "[ModifyVassalContractInteractionWindow.SelectObligationLevel( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
+												down = "[ModifyVassalContractInteractionWindow.IsObligationLevelSelected( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
+
+												enabled = "[ModifyVassalContractInteractionWindow.IsObligationLevelEnabled( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
 												using = tooltip_above
 
 												background = {
 													using = Background_Area_Dark
-													visible = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsSelected]"
+													visible = "[ModifyVassalContractInteractionWindow.IsObligationLevelSelected( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
 												}
 
 												icon = {
@@ -201,7 +202,7 @@ window = {
 													size = { 24 24 }
 													frame = 2
 													tintcolor = { 0.4 0.4 0.5 0.7 }
-													visible = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsCurrent]"
+													visible = "[ModifyVassalContractInteractionWindow.IsCurrentObligationLevel( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
 
 													using = Mask_Rough_Edges
 												}
@@ -221,8 +222,8 @@ window = {
 						background = {
 							using = Background_Area_With_Header
 							alpha = 0.75
-							#margin_left = 20
-							#margin_right = 20
+							margin_left = 20
+							margin_right = 20
 							margin_bottom = 0
 							margin_top = 2
 						}
@@ -240,40 +241,32 @@ window = {
 								}
 
 								hbox = {
-									margin = { 0 12 }
+									datamodel = "[ObligationLevelRadioButtons.Access]"
+									spacing = 20
+									margin = { 10 12 }
+									item = {
 
-									dynamicgridbox = {
-										flipdirection = yes
-										datamodel_wrap = 3
-										datamodel = "[ObligationLevelRadioButtons.Access]"
-										#addcolumn = 200
-										#addrow = 35
+										hbox = {
 
-										item = {
-											widget = {
-												size = { 200 35 }
-												hbox = {
-													margin_left = 10
-													button_radio_label = {
-														onclick = "[ModifyVassalContractInteractionWindowObligationLevelOption.Select]"
-														enabled = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled]"
-														visible = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsVisible]"
+											button_radio_label = {
+												onclick = "[ModifyVassalContractInteractionWindow.SelectObligationLevel( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
+												enabled = "[ModifyVassalContractInteractionWindow.IsObligationLevelEnabled( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
+												visible = "[ModifyVassalContractInteractionWindow.IsObligationLevelVisible( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
 
-														blockoverride "radio"
-														{
-															frame = "[BoolTo1And2( ModifyVassalContractInteractionWindowObligationLevelOption.IsSelected )]"
-														}
-														blockoverride "text"
-														{
-															text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
-															default_format = "#light_background"
-														}
-
-														tooltip = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetTooltip]"
-													}
-													expand = {}
+												blockoverride "radio" 
+												{ 
+													frame = "[BoolTo1And2( ModifyVassalContractInteractionWindow.IsObligationLevelSelected( ModifyVassalContractInteractionWindowObligationLevelOption.Self ) )]"
 												}
+												blockoverride "text"
+												{
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													default_format = "#light_background"
+												}
+
+												tooltip = "[ModifyVassalContractInteractionWindow.GetObligationLevelTooltipFor( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
 											}
+
+											expand = {}
 										}
 									}
 								}
@@ -334,13 +327,13 @@ window = {
 
 										button_checkbox_label = {
 											# Order dependent, first select the unselected level then set it as the new selected one
-											onclick = "[ObligationLevelCheckbox.AccessLevel( ObligationLevelCheckbox.GetUnselectedLevelIndex ).Select]"
+											onclick = "[ModifyVassalContractInteractionWindow.SelectObligationLevel( ObligationLevelCheckbox.GetLevel( ObligationLevelCheckbox.GetUnselectedLevelIndex ) )]"
 											onclick = "[ObligationLevelCheckbox.ToggleSelection]"
 
 											blockoverride "checkbox"
 											{
-												checked = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsSelected]"
-												enabled = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled]" 
+												checked = "[ModifyVassalContractInteractionWindow.IsObligationLevelSelected( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
+												enabled = "[ModifyVassalContractInteractionWindow.IsObligationLevelEnabled( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
 											}
 
 											blockoverride "text"
@@ -352,7 +345,7 @@ window = {
 
 										expand = {}
 
-										tooltip = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetTooltip]"
+										tooltip = "[ModifyVassalContractInteractionWindow.GetObligationLevelTooltipFor( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
 									}
 
 									expand = {}
@@ -366,43 +359,17 @@ window = {
 						layoutpolicy_horizontal = expanding
 						spacing = 5
 
-						widget = {
+						coa_character_sigil = {
 							datacontext = "[VassalContract.GetLiege]"
 
-							size = { 80 80 }
-
-							icon = {
-								name = "sigil_bg"
+							blockoverride "size"
+							{
 								size = { 80 80 }
-								texture = "gfx/interface/window_event/sigil_bg.dds"
-								alwaystransparent = yes
-								parentanchor = center
 							}
-
-							icon = {
-								name = "sigil"
-								visible = "[Character.HasSealCoA]"
+							blockoverride "sigil_size"
+							{
 								size = { 56 56 }
-								gfxtype = coatofarmsgfx
-								shaderfile = "gfx/FX/gui_coatofarms.shader"
-								effectname = PdxGuiSeal
-								alwaystransparent = yes
-								datacontext = "[Character.GetSealCoA]"
-								coat_of_arms_slot = "[CoatOfArms.GetSlot('(int32)88','(int32)88')]"
-								coat_of_arms = "[CoatOfArms.GetTexture('(int32)88','(int32)88')]"
-								coat_of_arms_mask = "gfx/interface/window_event/sigil_center.dds"
-								parentanchor = center
 							}
-
-							icon = {
-								name = "sigil_lowborn"
-								visible = "[Not( Character.HasSealCoA )]"
-								size = { 34 34 }
-								texture = "gfx/interface/window_event/sigil_center_lowborn.dds"
-								alwaystransparent = yes
-								parentanchor = center
-							}
-
 						}
 
 						expand = {}
@@ -420,43 +387,17 @@ window = {
 				            using = Text_Light_Background_Overrides
 						}
 
-						widget = {
+						coa_character_sigil = {
 							datacontext = "[VassalContract.GetVassal]"
 
-							size = { 80 80 }
-
-							icon = {
-								name = "sigil_bg"
+							blockoverride "size"
+							{
 								size = { 80 80 }
-								texture = "gfx/interface/window_event/sigil_bg.dds"
-								alwaystransparent = yes
-								parentanchor = center
 							}
-
-							icon = {
-								name = "sigil"
-								visible = "[Character.HasSealCoA]"
+							blockoverride "sigil_size"
+							{
 								size = { 56 56 }
-								gfxtype = coatofarmsgfx
-								shaderfile = "gfx/FX/gui_coatofarms.shader"
-								effectname = PdxGuiSeal
-								alwaystransparent = yes
-								datacontext = "[Character.GetSealCoA]"
-								coat_of_arms_slot = "[CoatOfArms.GetSlot('(int32)88','(int32)88')]"
-								coat_of_arms = "[CoatOfArms.GetTexture('(int32)88','(int32)88')]"
-								coat_of_arms_mask = "gfx/interface/window_event/sigil_center.dds"
-								parentanchor = center
 							}
-
-							icon = {
-								name = "sigil_lowborn"
-								visible = "[Not( Character.HasSealCoA )]"
-								size = { 34 34 }
-								texture = "gfx/interface/window_event/sigil_center_lowborn.dds"
-								alwaystransparent = yes
-								parentanchor = center
-							}
-
 						}
 
 						expand = {}
@@ -501,12 +442,10 @@ window = {
 								margin_bottom = 0
 								margin_top = 2
 							}
-							
 
 							item = {
 								vbox = {
 									datacontext = "[ObligationLevelRadioButtons.GetContainerData]"
-
 									visible = "[ObligationContainerData.ShouldShow( ModifyVassalContractInteractionWindow.GetContractPreview )]"
 
 									vbox = {
@@ -533,74 +472,60 @@ window = {
 									}
 
 									hbox = {
-										margin = { 0 12 }
+										datamodel = "[ObligationLevelRadioButtons.Access]"
+										spacing = 20
+										margin = { 10 12 }
+										item = {
+											hbox = {
 
-										dynamicgridbox = {
-											flipdirection = yes
-											datamodel_wrap = 3
-											datamodel = "[ObligationLevelRadioButtons.Access]"
-											#addcolumn = 200
-											#addrow = 35
+												button_radio_label = {
+													onclick = "[ModifyVassalContractInteractionWindow.SelectObligationLevel( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
+													enabled = "[ModifyVassalContractInteractionWindow.IsObligationLevelEnabled( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
+													visible = "[ModifyVassalContractInteractionWindow.IsObligationLevelVisible( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
 
-											item = {
-												widget = {
-													size = { 200 35 }
-													hbox = {
-														margin_left = 10
-														button_radio_label = {
-															onclick = "[ModifyVassalContractInteractionWindowObligationLevelOption.Select]"
-															enabled = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled]"
-															visible = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsVisible]"
-
-															blockoverride "radio"
-															{
-																frame = "[BoolTo1And2( ModifyVassalContractInteractionWindowObligationLevelOption.IsSelected )]"
-															}
-															blockoverride "text"
-															{
-																text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
-																default_format = "#light_background"
-															}
-
-															tooltip = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetTooltip]"
-														}
-														expand = {}
+													blockoverride "radio"
+													{
+													    frame = "[BoolTo1And2( ModifyVassalContractInteractionWindow.IsObligationLevelSelected( ModifyVassalContractInteractionWindowObligationLevelOption.Self ) )]"
 													}
+													blockoverride "text"
+													{
+													    text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													    default_format = "#light_background"
+													}
+
+													tooltip = "[ModifyVassalContractInteractionWindow.GetObligationLevelTooltipFor( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
 												}
+
+												expand = {}
 											}
 										}
 									}
 								}
 							}
 						}
-					}
 
-					### EK NOTE: Fine print stuff
-					dynamicgridbox = {
-						name = "non_feudal_minor_list_levels_checkboxes"
-						flipdirection = yes
-						datamodel_wrap = 3
-						datamodel = "[ModifyVassalContractInteractionWindow.AccessObligationLevelCheckboxes]"
+						dynamicgridbox = {
+							name = "non_feudal_minor_list_levels_checkboxes"
+							flipdirection = yes
+							datamodel_wrap = 3
+							datamodel = "[ModifyVassalContractInteractionWindow.AccessObligationLevelCheckboxes]"
 
-						item = {
-							widget = {
-								datacontext = "[ObligationLevelCheckbox.GetContainerData]"
-								visible = "[ObligationContainerData.ShouldShow( ModifyVassalContractInteractionWindow.GetContractPreview )]"
+							item = {
+								widget = {
+									datacontext = "[ObligationLevelCheckbox.GetContainerData]"
+									visible = "[ObligationContainerData.ShouldShow( ModifyVassalContractInteractionWindow.GetContractPreview )]"
 
-								background = {
-									using = Background_Area_With_Header
-									alpha = 0.75
-								}
+									background = {
+										using = Background_Area_With_Header
+										alpha = 0.75
+									}
 
-								size = { 200 65 }
+									size = { 200 65 }
 
-								vbox = {
-									margin_left = 10
-									spacing = -2 ### EK EDIT: Inverted so it doesn't look like crap
-									
-									### EK EDIT: Added the icon and wrapped into a hbox
-									hbox = {
-										layoutpolicy_horizontal = expanding
+									vbox = {
+										margin_left = 10
+										spacing = 2
+
 										text_single = {
 											layoutpolicy_horizontal = expanding
 											minimumsize = { 0 33 }
@@ -608,91 +533,59 @@ window = {
 											using = Font_Size_Medium
 											default_format = "#light_background"
 										}
-										text_single = {
-											text = "[ObligationContainerData.GetIcon]"
-											using = Font_Size_Medium
-											default_format = "#light_background"
-											tooltip = "OPTION_FAVORS_WHO"
-											margin_right = 3
-										}
-									}
 
-									hbox = {
-										datacontext = "[ObligationLevelCheckbox.GetLevel( '(int32)1' )]" # First one is always no effect/disabled option
-										layoutpolicy_horizontal = expanding
-										alwaystransparent = no
-										spacing = 5
+										hbox = {
+											datacontext = "[ObligationLevelCheckbox.GetLevel( '(int32)1' )]" # First one is always no effect/disabled option
+											layoutpolicy_horizontal = expanding
+											alwaystransparent = no
+											spacing = 5
 
 
-										button_checkbox_label = {
-											# Order dependent, first select the unselected level then set it as the new selected one
-											onclick = "[ObligationLevelCheckbox.AccessLevel( ObligationLevelCheckbox.GetUnselectedLevelIndex ).Select]"
-											onclick = "[ObligationLevelCheckbox.ToggleSelection]"
+											button_checkbox_label = {
+												# Order dependent, first select the unselected level then set it as the new selected one
+												onclick = "[ModifyVassalContractInteractionWindow.SelectObligationLevel( ObligationLevelCheckbox.GetLevel( ObligationLevelCheckbox.GetUnselectedLevelIndex ) )]"
+												onclick = "[ObligationLevelCheckbox.ToggleSelection]"
 
-											blockoverride "checkbox"
-											{
-												checked = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsSelected]"
-												enabled = "[ModifyVassalContractInteractionWindowObligationLevelOption.IsEnabled]"
+												blockoverride "checkbox"
+												{
+													checked = "[ModifyVassalContractInteractionWindow.IsObligationLevelSelected( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
+													enabled = "[ModifyVassalContractInteractionWindow.IsObligationLevelEnabled( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
+												}
+
+												blockoverride "text"
+												{
+													text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
+													default_format = "#light_background"
+												}
 											}
 
-											blockoverride "text"
-											{
-												text = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetName]"
-												default_format = "#light_background"
-											}
-										}
+											tooltip = "[ModifyVassalContractInteractionWindow.GetObligationLevelTooltipFor( ModifyVassalContractInteractionWindowObligationLevelOption.Self )]"
 
-										tooltip = "[ModifyVassalContractInteractionWindowObligationLevelOption.GetTooltip]"
+											expand = {}
+										}
 
 										expand = {}
 									}
-
-									expand = {}
 								}
 							}
 						}
 					}
 
-					### EK NOTE: Liege and vassal name + emblem
 					hbox = {
 						layoutpolicy_horizontal = expanding
 						spacing = 5
 
-						widget = {
+
+						coa_character_sigil = {
 							datacontext = "[VassalContract.GetLiege]"
 
-							size = { 80 80 }
-
-							icon = {
-								name = "sigil_bg"
+							blockoverride "size"
+							{
 								size = { 80 80 }
-								texture = "gfx/interface/window_event/sigil_bg.dds"
-								alwaystransparent = yes
-								parentanchor = center
 							}
-
-							icon = {
-								name = "sigil"
-								visible = "[Character.HasSealCoA]"
-								parentanchor = center
+							blockoverride "sigil_size"
+							{
 								size = { 56 56 }
-								gfxtype = coatofarmsgfx
-								shaderfile = "gfx/FX/gui_coatofarms.shader"
-								effectname = PdxGuiSeal
-								alwaystransparent = yes
-								datacontext = "[Character.GetSealCoA]"
-								coat_of_arms_slot = "[CoatOfArms.GetSlot('(int32)88','(int32)88')]"
-								coat_of_arms = "[CoatOfArms.GetTexture('(int32)88','(int32)88')]"
-								coat_of_arms_mask = "gfx/interface/window_event/sigil_center.dds"
-							}
-
-							icon = {
-								name = "sigil_lowborn"
-								visible = "[Not( Character.HasSealCoA )]"
-								parentanchor = center
-								size = { 34 34 }
-								texture = "gfx/interface/window_event/sigil_center_lowborn.dds"
-								alwaystransparent = yes
 							}
 						}
 
@@ -711,41 +604,16 @@ window = {
 							using = Text_Light_Background_Overrides
 						}
 
-						widget = {
+						coa_character_sigil = {
 							datacontext = "[VassalContract.GetVassal]"
 
-							size = { 80 80 }
-
-							icon = {
-								name = "sigil_bg"
+							blockoverride "size"
+							{
 								size = { 80 80 }
-								texture = "gfx/interface/window_event/sigil_bg.dds"
-								alwaystransparent = yes
-								parentanchor = center
 							}
-
-							icon = {
-								name = "sigil"
-								visible = "[Character.HasSealCoA]"
-								parentanchor = center
+							blockoverride "sigil_size"
+							{
 								size = { 56 56 }
-								gfxtype = coatofarmsgfx
-								shaderfile = "gfx/FX/gui_coatofarms.shader"
-								effectname = PdxGuiSeal
-								alwaystransparent = yes
-								datacontext = "[Character.GetSealCoA]"
-								coat_of_arms_slot = "[CoatOfArms.GetSlot('(int32)88','(int32)88')]"
-								coat_of_arms = "[CoatOfArms.GetTexture('(int32)88','(int32)88')]"
-								coat_of_arms_mask = "gfx/interface/window_event/sigil_center.dds"
-							}
-
-							icon = {
-								name = "sigil_lowborn"
-								visible = "[Not( Character.HasSealCoA )]"
-								parentanchor = center
-								size = { 34 34 }
-								texture = "gfx/interface/window_event/sigil_center_lowborn.dds"
-								alwaystransparent = yes
 							}
 						}
 
@@ -841,11 +709,13 @@ window = {
 
 				spacer = { size = {10 10} }
 
+				datacontext = "[CharacterInteractionConfirmationWindow.GetEffectsDescription.GetDisplayedEffects]"
+
 				hbox = {
 					visible = "[DisplayedInteractionEffects.HasAnyEffects]"
 					layoutpolicy_horizontal = expanding
 					margin = { 10 0 }
-
+					
 					text_label_left = {
 						text = CONTRACT_EFFECTS_HEADER
 					}

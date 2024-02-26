@@ -27,6 +27,15 @@ texticon = {
 		fontsize = 16
 	}
 }
+texticon = {
+	icon = praxis_icon
+	iconsize = {
+		texture = "gfx/interface/icons/icon_praxis.dds"	
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+	}
+}
 
 texticon = {
 	icon = spellbook_icon
