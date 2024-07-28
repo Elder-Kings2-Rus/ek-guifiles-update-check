@@ -1237,7 +1237,7 @@ types Arcana
 					tooltipwidget = {
 						magicka_gain_breakdown_widget = {}
 					}
-					tooltip_enabled = "[NotEqualTo_CFixedPoint(Character.MakeScope.ScriptValue('magicka_regen'), '(CFixedPoint)0')]"
+					tooltip_visible = "[NotEqualTo_CFixedPoint(Character.MakeScope.ScriptValue('magicka_regen'), '(CFixedPoint)0')]"
 
 					text_single = {
 						layoutpolicy_horizontal = expanding
@@ -1266,7 +1266,7 @@ types Arcana
 					tooltipwidget = {
 						magicka_loss_breakdown_widget = {}
 					}
-					tooltip_enabled = "[NotEqualTo_CFixedPoint(Character.MakeScope.ScriptValue('magicka_upkeep'), '(CFixedPoint)0')]"
+					tooltip_visible = "[NotEqualTo_CFixedPoint(Character.MakeScope.ScriptValue('magicka_upkeep'), '(CFixedPoint)0')]"
 
 					text_single = {
 						layoutpolicy_horizontal = expanding

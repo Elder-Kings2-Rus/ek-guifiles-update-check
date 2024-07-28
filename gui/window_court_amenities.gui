@@ -1,3 +1,4 @@
+# EK ADDITION: account for pirate govt
 types RoyalCourtTypes
 {
 
@@ -50,6 +51,7 @@ types RoyalCourtTypes
 
 		container = {
 			name = "royal_court_grandeur_view_tutorial_uses_this"
+			widgetid = "royal_court_grandeur_view_tutorial_uses_this"
 		}
 
 		background = {
@@ -240,7 +242,7 @@ types RoyalCourtTypes
 
 						using = tooltip_ne
 
-						tooltip_enabled = "[ValueBreakdown.HasTooltip]"
+						tooltip_visible = "[ValueBreakdown.HasTooltip]"
 						tooltipwidget = { widget_value_breakdown_tooltip = {} }
 					}
 				}
@@ -1065,7 +1067,7 @@ types RoyalCourtTypes
 					### EK EDIT: Court Fashion -> Popular Share
 					widget = {
 						datacontext = "[GetScriptedGui('uses_regular_amenities')]"
-						visible = "[ScriptedGui.IsValid( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+						visible = "[ScriptedGui.IsValid( GuiScope.SetRoot(RoyalCourtWindow.GetCharacter.MakeScope).End )]"
 						name = "court_amenity_fashion"
 						parentanchor = left|top
 						position = { -30 0 }
@@ -1077,7 +1079,7 @@ types RoyalCourtTypes
 					}
 					widget = {
 						datacontext = "[GetScriptedGui('uses_pirate_amenities')]"
-						visible = "[ScriptedGui.IsValid( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+						visible = "[ScriptedGui.IsValid( GuiScope.SetRoot(RoyalCourtWindow.GetCharacter.MakeScope).End )]"
 						name = "pirate_court_redistribution"
 						parentanchor = left|top
 						position = { -30 0 }
@@ -1164,7 +1166,7 @@ types RoyalCourtTypes
 					### EK EDIT: Lodging Standards -> Crew Share
 					widget = {
 						datacontext = "[GetScriptedGui('uses_regular_amenities')]"
-						visible = "[ScriptedGui.IsValid( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+						visible = "[ScriptedGui.IsValid( GuiScope.SetRoot(RoyalCourtWindow.GetCharacter.MakeScope).End )]"
 						name = "court_amenity_lodgings"
 						parentanchor = right
 						position = { -20 0 }
@@ -1181,7 +1183,7 @@ types RoyalCourtTypes
 					}
 					widget = {
 						datacontext = "[GetScriptedGui('uses_pirate_amenities')]"
-						visible = "[ScriptedGui.IsValid( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+						visible = "[ScriptedGui.IsValid( GuiScope.SetRoot(RoyalCourtWindow.GetCharacter.MakeScope).End )]"
 						name = "pirate_court_crew"
 						parentanchor = right
 						position = { -20 0 }
@@ -1200,7 +1202,7 @@ types RoyalCourtTypes
 					### EK EDIT: Food Quality -> Knights Share
 					widget = {
 						datacontext = "[GetScriptedGui('uses_regular_amenities')]"
-						visible = "[ScriptedGui.IsValid( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+						visible = "[ScriptedGui.IsValid( GuiScope.SetRoot(RoyalCourtWindow.GetCharacter.MakeScope).End )]"
 						name = "court_amenity_dining"
 						parentanchor = bottom|left
 						position = { 98 -20 }
@@ -1219,7 +1221,7 @@ types RoyalCourtTypes
 					}
 					widget = {
 						datacontext = "[GetScriptedGui('uses_pirate_amenities')]"
-						visible = "[ScriptedGui.IsValid( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+						visible = "[ScriptedGui.IsValid( GuiScope.SetRoot(RoyalCourtWindow.GetCharacter.MakeScope).End )]"
 						name = "pirate_court_knights"
 						parentanchor = bottom|left
 						position = { 98 -20 }
@@ -1264,7 +1266,7 @@ types RoyalCourtTypes
 					### EK EDIT: Court Servants -> Court Share
 					widget = {
 						datacontext = "[GetScriptedGui('uses_regular_amenities')]"
-						visible = "[ScriptedGui.IsValid( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+						visible = "[ScriptedGui.IsValid( GuiScope.SetRoot(RoyalCourtWindow.GetCharacter.MakeScope).End )]"
 						name = "court_amenity_servants"
 						parentanchor = bottom|right
 						position = { -148 -20 }
@@ -1283,7 +1285,7 @@ types RoyalCourtTypes
 					}
 					widget = {
 						datacontext = "[GetScriptedGui('uses_pirate_amenities')]"
-						visible = "[ScriptedGui.IsValid( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+						visible = "[ScriptedGui.IsValid( GuiScope.SetRoot(RoyalCourtWindow.GetCharacter.MakeScope).End )]"
 						name = "pirate_court_court"
 						parentanchor = bottom|right
 						position = { -148 -20 }
@@ -1720,10 +1722,6 @@ types RoyalCourtTypes
 					layoutpolicy_horizontal	= expanding
 					text = COURT_GRANDEUR_CURRENT_LEVEL_GRACE_PERIOD
 				}
-
-				spacer = {
-					size = { 10 10 }
-				}
 			}
 		}
 
@@ -1768,7 +1766,7 @@ types RoyalCourtTypes
 				layoutpolicy_horizontal	= expanding
 				text = COURT_GRANDEUR_PROGRESS_TOOLTIP_BASELINE
 
-				tooltip_enabled = "[ValueBreakdown.HasTooltip]"
+				tooltip_visible = "[ValueBreakdown.HasTooltip]"
 				tooltipwidget = { widget_value_breakdown_tooltip = {} }
 			}
 
@@ -1778,7 +1776,7 @@ types RoyalCourtTypes
 				layoutpolicy_horizontal	= expanding
 				text = COURT_GRANDEUR_PROGRESS_TOOLTIP_BASELINE_CHANGE
 
-				tooltip_enabled = "[ValueBreakdown.HasTooltip]"
+				tooltip_visible = "[ValueBreakdown.HasTooltip]"
 				tooltipwidget = { widget_value_breakdown_tooltip = {} }
 			}
 
@@ -1787,6 +1785,15 @@ types RoyalCourtTypes
 				visible = "[NotEqualTo_int32( CourtGrandeurData.GetDaysUntilAtBase, '(int32)0' )]"
 				text = COURT_GRANDEUR_PROGRESS_TOOLTIP_BASELINE_TIME
 			}
+			
+			#EK ADDITION: tooltip to once again tell the player that pirates get grandeur differently
+			cooltip_paragraph = {
+				layoutpolicy_horizontal	= expanding
+				datacontext = "[GetScriptedGui('uses_pirate_amenities')]"
+				visible = "[ScriptedGui.IsValid( GuiScope.SetRoot(RoyalCourtWindow.GetCharacter.MakeScope).End )]"
+				text = COURT_AMENITIES_PIRATES_NO_AMENITIES_GRANDEUR
+			}
+			#EK ADDITION END
 
 			spacer = {
 				size = { 10 10 }

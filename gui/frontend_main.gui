@@ -1,4 +1,5 @@
 # EK MainMenu Tweak
+#EK NOTE: I (Theyn) purposefully kept the old main menu vs the newer one. I'm the one that maintains it too.
 widget = {
 	name = "mainmenu_panel_bottom"
 	parentanchor = center
@@ -37,7 +38,7 @@ widget = {
 		icon = {
 			parentanchor = center
 			size = { 100% 100% }
-			texture = "gfx/interface/illustrations/main_menu/frontend_whitegold.dds"
+			texture = "gfx/interface/illustrations/main_menu/frontend_whitegold.dds" #EK EDIT
 
 			modify_texture = {
 				name = "fade"
@@ -328,7 +329,7 @@ widget = {
 			}
 
 
-			# Appear bounce animation would go here. don't like it though.
+			#EK DISABLED: Appear bounce animation would go here. don't like it though.
 
 			state = {
 				name = "glow_1"
@@ -416,7 +417,7 @@ widget = {
 				spacing = 25
 				datacontext = "[FrontEndMainView.AccessLoadView]"
 				set_parent_size_to_minimum = yes
-				# EK Main Logo
+				#EK EDIT: EK Main Logo
 				icon = {
 					name = "ek_logo"
 					texture = "gfx/interface/frontend/main_logo.dds"
@@ -530,14 +531,16 @@ widget = {
 									tooltip = "[SaveGameItem.GetMissingDLCInfo]"
 								}
 
+								# Because of game rules
 								achievements_disabled_icon = {
 									visible = "[SaveGameItem.HasAchievementBlockingGameRules]"
 									tooltip = "[SaveGameItem.GetAchievementBlockingGameRulesInfo]"
 								}
 
+								# because of other reasons (tag switching, console, multiplayer, modified checksum)
 								achievements_disabled_icon = {
-									visible = "[And( SaveGameItem.CanGetAchievements, Not( IsGameChecksumOk ) )]"
-									tooltip = "GAME_CHECKSUM_CHANGED_FROM_SAVE_FILE"
+										visible = "[And( Not(SaveGameItem.HasAchievementBlockingGameRules), Not(SaveGameItem.CanGetAchievements) )]"
+										tooltip = "ACHIEVEMENTS_DISABLED_SAVEGAME"
 								}
 
 								expand = {
@@ -924,19 +927,7 @@ widget = {
 							spacing = 5
 
 							item = {
-								hbox = {
-									widget = {
-										visible = "[DlcItem.GetDlc.IsMajor]"
-										size = { 47 47 }
-										dlc_button = {}
-									}
-
-									widget = {
-										visible = "[Not( DlcItem.GetDlc.IsMajor )]"
-										size = { 33 33 }
-										dlc_button = {}
-									}
-								}
+								dlc_button = {}
 							}
 						}
 

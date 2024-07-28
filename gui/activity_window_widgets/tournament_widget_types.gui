@@ -1,4 +1,4 @@
-#
+# EK ADDITION: Added new entries for the arcane clash
 # Put widgets we reuse within the tournament plugin widgets here.
 #
 types TournamentWidgetTypes
@@ -113,7 +113,7 @@ types TournamentWidgetTypes
 						margin = { 4 4 }
 					}
 				}
-
+				# EK ADDITION: Added new entry for the arcane clash
 				vbox = {
 					portrait_head = { }
 					
@@ -572,12 +572,6 @@ types TournamentWidgetTypes
 		texture = "gfx/interface/window_activities/tournament/icon_tournament_skill_wit.dds"
 	}
 
-    ### EK EDIT
-    type icon_contest_affinity_magic = icon_contest_affinity_base {
-		datacontext = "[GetTrait( 'tourney_participant' ).GetTraitTrackByKey( 'magic' )]"
-		texture = "gfx/interface/window_activities/tournament/icon_tournament_skill_magic.dds"
-	}
-
 	type icon_contest_type_favoured = icon {
 		texture = "gfx/interface/icons/symbols/arrow_favored.dds"
 	}
@@ -758,7 +752,7 @@ types TournamentWidgetTypes
 		background = {
 			using = Background_Area_ExtraDark
 
-			margin = { 4 4 }
+			margin = { 5 5 } # EK EDIT: account for arcane clash, was 4 4
 		}
 
 		hbox_contest_type_affinies_bow = { }
@@ -768,6 +762,8 @@ types TournamentWidgetTypes
 		hbox_contest_type_affinies_horse = { }
 
 		hbox_contest_type_affinies_wit = { }
+
+        hbox_contest_type_affinies_magic = { } # EK ADDITION: account for arcane clash
 	}
 
 	type hbox_contest_type_affinities_container = hbox {
@@ -785,86 +781,7 @@ types TournamentWidgetTypes
 
 		hbox_contest_type_affinies_wit = { }
 
-        hbox_contest_type_affinies_magic = { }
-
-		expand = {}
-	}
-
-    ### EK EDIT
-    ### Brief: hbox_contest_type_affinies_magic
-	# Has the following blocks:
-	#
-	#	"icon_sizes"
-	#		The size of the icons. Usage:
-	#			size = { 24 24 }
-	#
-	type hbox_contest_type_affinies_magic = hbox {
-		visible = "[IsMagicContest]"
-
-		icon = {
-			texture = "gfx/interface/icons/trait_level_tracks/magic.dds"
-			block "icon_sizes"
-			{
-				size = { 20 20 }
-			}
-			tooltip = "MAGIC_EXPERIENCE_GREATER_TOOLTIP"
-		}
-
-		icon_contest_type_favoured = {
-			block "icon_sizes"
-			{
-				size = { 14 14 }
-			}
-			visible = no # Add here if some are added at any point
-			tooltip = "MAGIC_EXPERIENCE_REGULAR_TOOLTIP"
-		}
-
-		widget_contest_type_most_favoured = {
-			block "icon_sizes"
-			{
-				size = { 14 14 }
-			}
-			visible = "[IsContestType( 'tournament_phase_arcane_clash' )]"
-			tooltip = "MAGIC_EXPERIENCE_GREATER_TOOLTIP"
-		}
-	}
-
-	type vbox_contest_type_affinities_container = vbox {
-		layoutpolicy_horizontal = expanding
-
-		background = {
-			using = Background_Area_ExtraDark
-
-			margin = { 5 5 }
-		}
-
-		hbox_contest_type_affinies_bow = { }
-
-		hbox_contest_type_affinies_foot = { }
-
-		hbox_contest_type_affinies_horse = { }
-
-		hbox_contest_type_affinies_wit = { }
-
-        hbox_contest_type_affinies_magic = { }
-	}
-
-	type hbox_contest_type_affinities_container = hbox {
-
-		layoutpolicy_horizontal = expanding
-		spacing = 8
-
-		expand = {}
-
-		hbox_contest_type_affinies_bow = { }
-
-		hbox_contest_type_affinies_foot = { }
-
-		hbox_contest_type_affinies_horse = { }
-
-		hbox_contest_type_affinies_wit = { }
-
-        hbox_contest_type_affinies_magic = { }
+        hbox_contest_type_affinies_magic = { } # EK ADDITION: account for arcane clash
 
 		expand = {}
 	}
@@ -999,25 +916,6 @@ types TournamentWidgetTypes
 		}
 	}
 
-	#EK EDIT: added magic aptitude type
-	type vbox_character_magic_contest_aptitude = vbox_character_contest_aptitude {
-
-		tooltip = character_contest_type_aptitude_magic
-
-		blockoverride "contest_affinity_icon"
-		{
-			icon_contest_affinity_magic = {
-				size = { 32 32 }
-			}
-		}
-
-		blockoverride "contest_affinity_datamodel"
-		{
-			# values for progress bar (blocks under icon); max, current, target
-			datamodel = "[GetSegmentedProgressTargetBar( '(int32)5', FixedPointToInt( GuiScope.SetRoot( GetPlayer.MakeScope).ScriptValue('contest_type_aptitude_magic') ), FixedPointToInt( GuiScope.SetRoot( GetPlayer.MakeScope).ScriptValue('contest_type_aptitude_magic') )  )]"
-		}
-	}
-
 	### Brief: hbox_character_contest_aptitude
 	# Aligns the contest affinities a character has with icon on to the left and then
 	# stars next to it.
@@ -1139,23 +1037,6 @@ types TournamentWidgetTypes
 		blockoverride "contest_affinity_icon"
 		{
 			icon_contest_affinity_wit = {
-				size = { 26 26 }
-			}
-		}
-
-		blockoverride "contest_affinity_datamodel"
-		{
-			datamodel = "[GetSegmentedProgressTargetBar( '(int32)5', FixedPointToInt( GetWitContestTypeAptitude ), FixedPointToInt( GetWitContestTypeAptitude ) )]"
-		}
-	}
-
-	type hbox_character_magic_contest_aptitude = hbox_character_contest_aptitude {
-
-		tooltip = character_contest_type_aptitude_magic
-
-		blockoverride "contest_affinity_icon"
-		{
-			icon_contest_affinity_magic = {
 				size = { 26 26 }
 			}
 		}

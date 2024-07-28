@@ -1,3 +1,4 @@
+# EK EDIT: swap CK3 -> EK2 logo
 window = {
 	name = "ingame_pausemenu"
 	parentanchor = center
@@ -57,7 +58,8 @@ window = {
 				vbox = {
 					margin = { 30 30 }
 					spacing = 10
-
+					
+					# EK EDIT: swap CK3 -> EK2 logo
 					icon = {
 						texture = "gfx/interface/frontend/main_logo.dds"
 						size = { 500 235 }

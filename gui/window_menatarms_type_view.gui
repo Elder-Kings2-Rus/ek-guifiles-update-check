@@ -111,7 +111,7 @@ window = {
 									default_format = "#high"
 
 									tooltip = "[MenAtArmsTypeViewTypeItem.GetCreateWarning]"
-									tooltip_enabled = "[Not(MenAtArmsTypeViewTypeItem.CanCreate)]"
+									tooltip_visible = "[Not(MenAtArmsTypeViewTypeItem.CanCreate)]"
 
 									background = {
 										visible = "[Not(MenAtArmsTypeViewTypeItem.CanCreate)]"
@@ -238,41 +238,36 @@ window = {
 						layoutpolicy_horizontal = expanding
 					}
 
-					vbox = {
-						margin_bottom = 15
-						layoutpolicy_vertical = expanding
-		
-						text_label_center = {
-							text = "[MenAtArmsType.GetReinforcementCostString( GetPlayer )]"
-						}
-		
-						text_label_center = {
-							text = "[MenAtArmsType.GetFullStrengthMaintenanceCostForPlayerString]"
-						}
-		
-						text_label_center = {
-							text = "MV_REGIMENT_START_SIZE"
-						}
-		
-						button_primary = {
-							size = { 200 40 }
-							text = "[MenAtArmsTypeView.GetCostString( GetPlayer )]"
-							onclick = "[MenAtArmsTypeView.Create]"
-							enabled = "[MenAtArmsTypeView.CanCreate]"
-							tooltip = "[MenAtArmsTypeView.GetCreateTooltip]"
-		
-							background = {
-								using = Background_Area
-							}
+					spacer = {
+						size = { 10 46 }
+					}
+
+					text_label_center = {
+						text = "MV_REGIMENT_START_SIZE"
+					}
+
+					spacer = {
+						size = { 10 10 }
+					}
+
+					button_primary = {
+						size = { 200 40 }
+						text = "[MenAtArmsTypeView.GetCostString( GetPlayer )]"
+						onclick = "[MenAtArmsTypeView.Create]"
+						enabled = "[MenAtArmsTypeView.CanCreate]"
+						tooltip = "[MenAtArmsTypeView.GetCreateTooltip]"
+
+						background = {
+							using = Background_Area
 						}
 					}
 
-					expand = { }
+					spacer = {
+						size = { 10 10 }
+					}
 				}
 			}
 		}
-
-		expand = {}
 	}
 }
 
@@ -351,9 +346,9 @@ types MenAtArms
 			block "stat_spacing"
 			{
 			}
-
+			
+			#EK EDIT: siege values also visible for normal MaA if value > 0
 			hbox = {
-				#EK EDIT: siege values also visible for normal MaA if value > 0
 				layoutpolicy_horizontal = expanding
 				visible = "[GreaterThan_CFixedPoint( MenAtArmsType.GetStat( GetPlayer, Province.Self, 'siege_value' ),'(CFixedPoint)0')]"
 				block "siege_tt"
@@ -383,6 +378,7 @@ types MenAtArms
 					min_width = 25
 				}
 			}
+			#EK EDIT END
 
 			hbox = {
 				block "damage_tt"
@@ -509,6 +505,7 @@ types MenAtArms
 				}
 			}
 		}
+		#EK EDIT: to show siege on normal maa
 		block "siege_effective_level"
 		{
 			
@@ -521,6 +518,7 @@ types MenAtArms
 				margin_left = 15
 			}
 		}
+		#EK EDIT END
 	}
 
 	# Requires MenAtArmsType data context
@@ -620,10 +618,10 @@ types MenAtArms
 
 		hbox = {
 			layoutpolicy_horizontal = expanding
-			layoutpolicy_vertical = expanding
+			layoutpolicy_vertical = expanding # EK edit: to show more terrains
 			visible = "[Not(IsDataModelEmpty(MenAtArmsType.GetTerrainModifiers))]"
 			
-			dynamicgridbox = {
+			dynamicgridbox = { # EK edit: to show more terrains
 				flipdirection = yes
 				datamodel = "[MenAtArmsType.GetTerrainModifiers]"
 				datamodel_wrap = 10
@@ -747,6 +745,18 @@ types MenAtArms
 			}
 
 			expand = {}
+
+			vbox = {
+				margin_bottom = 15
+
+				text_label_center = {
+					text = "[MenAtArmsType.GetReinforcementCostString( GetPlayer )]"
+				}
+
+				text_label_center = {
+					text = "[MenAtArmsType.GetFullStrengthMaintenanceCostForPlayerString]"
+				}
+			}
 		}
 	}
 

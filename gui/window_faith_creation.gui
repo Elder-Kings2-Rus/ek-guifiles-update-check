@@ -4,6 +4,7 @@
 
 window = {
 	name = "faith_creation_window"
+	widgetid = "faith_creation_window"
 	datacontext = "[FaithCreationWindow.GetVassalConversionWindow]"
 	datacontext = "[GetVariableSystem]"
 	parentanchor = center
@@ -20,15 +21,6 @@ window = {
 		on_start = "[GetVariableSystem.Set( 'faith_creation_icon_selection', 'false' )]"
 		on_start = "[GetVariableSystem.Clear('faith_creation_right_view')]"
 		on_start = "[GetVariableSystem.Clear('conversion_view_vassals')]"
-
-		# EK EDIT these are to show/hide stuff
-		on_start = "[GetVariableSystem.Clear('show_hide_tenets')]"
-		on_start = "[GetVariableSystem.Clear('show_hide_main_group')]"
-		on_start = "[GetVariableSystem.Clear('show_hide_marriage')]"
-		on_start = "[GetVariableSystem.Clear('show_hide_crimes')]"
-		on_start = "[GetVariableSystem.Clear('show_hide_clergy')]"
-		on_start = "[GetVariableSystem.Clear('show_hide_daedric_princes')]"
-		on_start = "[GetVariableSystem.Clear('show_hide_virtues_sins')]"
 	}
 
 	state = {
@@ -183,33 +175,12 @@ window = {
 						layoutpolicy_horizontal = expanding
 						spacing = 15
 
-						hbox = {
-							layoutpolicy_horizontal = expanding
-							margin = { 15 0 }
-							margin_left = 35
-							vbox = {
-								layoutpolicy_horizontal = expanding
-								text_label_center = {
-									text = "[core_tenets|E]"
-								}
-							}
-							button_expand = {
-								tooltip = "[SelectLocalization( VariableSystem.Exists('show_hide_tenets'), 'show_tenets', 'hide_tenets' )]"
-								using = tooltip_nw
-								onclick = "[VariableSystem.Toggle('show_hide_tenets')]"
-
-								texture = "gfx/interface/buttons/button_tree_expand.dds"
-								frame = "[Select_int32( VariableSystem.Exists('show_hide_tenets'), '(int32)1', '(int32)2' )]"
-								mirror = horizontal
-
-								oversound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_pointer_over"
-								clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
-							}
+						text_label_center = {
+							text = "[core_tenets|E]"
 						}
 
 						hbox = {
 							name = "tenets_grid"
-							visible = "[Not(VariableSystem.Exists('show_hide_tenets'))]"
 							datamodel = "[FaithCreationWindow.GetGroupingHelper( 'core_tenets' ).GetGrouping]"
 							spacing = 45
 
@@ -230,54 +201,6 @@ window = {
 
 									container_tenet_item = {
 										tooltip = "FAITH_WINDOW_DOCTRINE_CHANGE_TOOLTIP"
-									}
-
-									onclick = "[GuiFaithCreationDoctrineItem.GetFaithCreationWindow.GetDoctrineGroupWindow.ShowWindowSortList( GuiFaithCreationDoctrineItem.GetSlotIndex )]"
-									onclick = "[GetVariableSystem.Set( 'faith_creation_right_view', 'doctrine_selection' )]"
-									onclick = "[GetVariableSystem.Set( 'doctrine_group_name', FaithDoctrine.GetGroup.GetName( GuiFaithDoctrineItem.GetFaith ) )]"
-								}
-							}
-						}
-
-						hbox = {
-							name = "tenets_grid_collapse"
-							visible = "[VariableSystem.Exists('show_hide_tenets')]"
-							datamodel = "[FaithCreationWindow.GetGroupingHelper( 'core_tenets' ).GetGrouping]"
-							spacing = 45
-
-							item = {
-								button_group = {
-									datacontext = "[GuiFaithCreationDoctrineItem.GetGuiFaithDoctrineItem]"
-									datacontext = "[GuiFaithDoctrineItem.GetDoctrine]"
-									datacontext = "[GuiFaithDoctrineItem.GetFaith]"
-
-									icon = {
-										size = { 130 44 }
-										scale = 1.5
-										parentanchor = center
-										visible = "[EqualTo_int32( GuiFaithCreationDoctrineItem.GetSlotIndex, GuiFaithCreationDoctrineItem.GetFaithCreationWindow.GetDoctrineGroupWindow.GetSlotIndex ) ]"
-										texture = "gfx/portraits/portrait_glow.dds"
-										using = Color_Orange
-									}
-									container = {
-										using = tooltip_se
-
-										text_label_center = {
-											name = "doctrine_name"
-											parentanchor = center
-											widgetanchor = center
-											position = { 0 5 }
-											minimumsize = { 130 0 }
-											maximumsize = { 130 44 }
-											fontsize_min = 12
-											multiline = yes
-											align = center
-											elide = right
-											text = "[FaithDoctrine.GetNameNoTooltip( Faith.Self )]"
-											default_format = "#high"
-
-											using = Font_Size_Medium
-										}
 									}
 
 									onclick = "[GuiFaithCreationDoctrineItem.GetFaithCreationWindow.GetDoctrineGroupWindow.ShowWindowSortList( GuiFaithCreationDoctrineItem.GetSlotIndex )]"
@@ -312,31 +235,14 @@ window = {
 									layoutpolicy_horizontal = expanding
 									spacing = 10
 
-									hbox = {
+									text_label_left = {
 										layoutpolicy_horizontal = expanding
-										#margin_right = 15
-										text_label_left = {
-											layoutpolicy_horizontal = expanding
-											text = "FAITH_DOCTRINES_IMPORTANT"
-											default_format = "#low"
-										}
-										button_expand = {
-											tooltip = "[SelectLocalization( VariableSystem.Exists('show_hide_main_group'), 'show_main_group', 'hide_main_group' )]"
-											using = tooltip_nw
-											onclick = "[VariableSystem.Toggle('show_hide_main_group')]"
-
-											texture = "gfx/interface/buttons/button_tree_expand.dds"
-											frame = "[Select_int32( VariableSystem.Exists('show_hide_main_group'), '(int32)1', '(int32)2' )]"
-											mirror = horizontal
-
-											oversound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_pointer_over"
-											clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
-										}
+										text = "FAITH_DOCTRINES_IMPORTANT"
+										default_format = "#low"
 									}
 
 									fixedgridbox = {
 										name = "doctrines_grid_main_group"
-										visible = "[Not(VariableSystem.Exists('show_hide_main_group'))]"
 										datamodel = "[FaithCreationWindow.GetGroupingHelper( 'main_group' ).GetGrouping]"
 
 										flipdirection = yes
@@ -354,107 +260,21 @@ window = {
 										}
 									}
 								}
-								
-								vbox = {
-									layoutpolicy_horizontal = expanding
-									spacing = 10
-
-									hbox = {
-										layoutpolicy_horizontal = expanding
-										#margin_right = 15
-										text_label_left = {
-											layoutpolicy_horizontal = expanding
-											text = "FAITH_DOCTRINES_PANTHEON"
-											default_format = "#low"
-										}
-										button_expand = {
-											tooltip = "[SelectLocalization( VariableSystem.Exists('show_hide_pantheon'), 'show_pantheon', 'hide_pantheon' )]"
-											using = tooltip_nw
-											onclick = "[VariableSystem.Toggle('show_hide_pantheon')]"
-
-											texture = "gfx/interface/buttons/button_tree_expand.dds"
-											frame = "[Select_int32( VariableSystem.Exists('show_hide_pantheon'), '(int32)1', '(int32)2' )]"
-											mirror = horizontal
-
-											oversound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_pointer_over"
-											clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
-										}
-									}
-
-									fixedgridbox = {
-										name = "doctrines_grid_pantheon"
-										visible = "[Not(VariableSystem.Exists('show_hide_pantheon'))]"
-										datamodel = "[FaithCreationWindow.GetGroupingHelper( 'pantheon' ).GetGrouping]"
-										datacontext = "[GetScriptedGui('show_second_pantheon_doctrines')]"
-
-										flipdirection = yes
-										addcolumn = 270
-										addrow = 65
-										datamodel_wrap = 2
-
-										item = {
-											widget_doctrine_selection_item = {
-												visible = "[And( Not( And( Not( FaithCreationWindow.HasParameter( 'uses_monolatry_aspect_active' )), EqualTo_string(FaithDoctrine.GetNameNoTooltip( GuiFaithDoctrineItem.GetFaith ), Localize('doctrine_pantheon_no_aspect_name')) )), Not( And( FaithCreationWindow.HasParameter( 'no_secondary_pantheon_active' ), EqualTo_string(FaithDoctrine.GetNameNoTooltip( GuiFaithDoctrineItem.GetFaith ), Localize('doctrine_sp_no_deity_name')) )))]"
-												blockoverride "doctrine_icon_texture"
-												{
-													texture = "[FaithDoctrine.GetIcon]"
-												}
-											}
-										}
-									}
-
-									fixedgridbox = {
-										name = "doctrines_grid_secondary_pantheon"
-										visible = "[Not(VariableSystem.Exists('show_hide_pantheon'))]"
-										datamodel = "[FaithCreationWindow.GetGroupingHelper( 'secondary_pantheon' ).GetGrouping]"
-										datacontext = "[GetScriptedGui('show_second_pantheon_doctrines')]"
-
-										flipdirection = yes
-										addcolumn = 270
-										addrow = 65
-										datamodel_wrap = 2
-
-										item = {
-											widget_doctrine_selection_item = {
-												visible = "[And( Not( And( Not( FaithCreationWindow.HasParameter( 'uses_monolatry_aspect_active' )), EqualTo_string(FaithDoctrine.GetNameNoTooltip( GuiFaithDoctrineItem.GetFaith ), Localize('doctrine_pantheon_no_aspect_name')) )), Not( And( FaithCreationWindow.HasParameter( 'no_secondary_pantheon_active' ), EqualTo_string(FaithDoctrine.GetNameNoTooltip( GuiFaithDoctrineItem.GetFaith ), Localize('doctrine_sp_no_deity_name')) )))]"
-												blockoverride "doctrine_icon_texture"
-												{
-													texture = "[FaithDoctrine.GetIcon]"
-												}
-											}
-										}
-									}
-								}
+								# EK Addition: select pantheon
+								ek_pantheon_selection = { }
 
 								vbox = {
 									layoutpolicy_horizontal = expanding
 									spacing = 10
 
-									hbox = {
+									text_label_left = {
 										layoutpolicy_horizontal = expanding
-										#margin_right = 15
-										text_label_left = {
-											layoutpolicy_horizontal = expanding
-											text = "FAITH_DOCTRINES_MARRIAGE"
-											default_format = "#low"
-										}
-										button_expand = {
-											tooltip = "[SelectLocalization( VariableSystem.Exists('show_hide_marriage'), 'show_marriage', 'hide_marriage' )]"
-											using = tooltip_nw
-											onclick = "[VariableSystem.Toggle('show_hide_marriage')]"
-
-											texture = "gfx/interface/buttons/button_tree_expand.dds"
-											frame = "[Select_int32( VariableSystem.Exists('show_hide_marriage'), '(int32)1', '(int32)2' )]"
-											mirror = horizontal
-
-											oversound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_pointer_over"
-											clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
-										}
+										text = "FAITH_DOCTRINES_MARRIAGE"
+										default_format = "#low"
 									}
 
 									fixedgridbox = {
 										name = "doctrines_grid_marriage"
-										visible = "[Not(VariableSystem.Exists('show_hide_marriage'))]"
 										datamodel = "[FaithCreationWindow.GetGroupingHelper( 'marriage' ).GetGrouping]"
 										flipdirection = yes
 										addcolumn = 270
@@ -472,31 +292,14 @@ window = {
 									layoutpolicy_horizontal = expanding
 									spacing = 10
 
-									hbox = {
+									text_label_left = {
 										layoutpolicy_horizontal = expanding
-										#margin_right = 15
-										text_label_left = {
-											layoutpolicy_horizontal = expanding
-											text = "FAITH_DOCTRINES_CRIMES"
-											default_format = "#low"
-										}
-										button_expand = {
-											tooltip = "[SelectLocalization( VariableSystem.Exists('show_hide_crimes'), 'show_crimes', 'hide_crimes' )]"
-											using = tooltip_nw
-											onclick = "[VariableSystem.Toggle('show_hide_crimes')]"
-
-											texture = "gfx/interface/buttons/button_tree_expand.dds"
-											frame = "[Select_int32( VariableSystem.Exists('show_hide_crimes'), '(int32)1', '(int32)2' )]"
-											mirror = horizontal
-
-											oversound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_pointer_over"
-											clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
-										}
+										text = "FAITH_DOCTRINES_CRIMES"
+										default_format = "#low"
 									}
 
 									fixedgridbox = {
 										name = "doctrines_grid_crimes"
-										visible = "[Not(VariableSystem.Exists('show_hide_crimes'))]"
 										datamodel = "[FaithCreationWindow.GetGroupingHelper( 'crimes' ).GetGrouping]"
 
 										flipdirection = yes
@@ -514,31 +317,14 @@ window = {
 									layoutpolicy_horizontal = expanding
 									spacing = 10
 
-									hbox = {
+									text_label_left = {
 										layoutpolicy_horizontal = expanding
-										#margin_right = 15
-										text_label_left = {
-											layoutpolicy_horizontal = expanding
-											text = "FAITH_DOCTRINES_CLERGY"
-											default_format = "#low"
-										}
-										button_expand = {
-											tooltip = "[SelectLocalization( VariableSystem.Exists('show_hide_clergy'), 'show_clergy', 'hide_clergy' )]"
-											using = tooltip_nw
-											onclick = "[VariableSystem.Toggle('show_hide_clergy')]"
-
-											texture = "gfx/interface/buttons/button_tree_expand.dds"
-											frame = "[Select_int32( VariableSystem.Exists('show_hide_clergy'), '(int32)1', '(int32)2' )]"
-											mirror = horizontal
-
-											oversound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_pointer_over"
-											clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
-										}
+										text = "FAITH_DOCTRINES_CLERGY"
+										default_format = "#low"
 									}
 
 									fixedgridbox = {
 										name = "doctrines_grid_clergy"
-										visible = "[Not(VariableSystem.Exists('show_hide_clergy'))]"
 										datamodel = "[FaithCreationWindow.GetGroupingHelper( 'clergy' ).GetGrouping]"
 
 										flipdirection = yes
@@ -552,91 +338,11 @@ window = {
 									}
 								}
 
-								### EK EDIT: Added our Daedric Princes group
-								vbox = {
-									layoutpolicy_horizontal = expanding
-									spacing = 10
-
-									hbox = {
-										layoutpolicy_horizontal = expanding
-										#margin_right = 15
-										text_label_left = {
-											layoutpolicy_horizontal = expanding
-											text = "FAITH_DOCTRINES_DAEDRIC_PRINCES"
-											default_format = "#low"
-										}
-										button_expand = {
-											tooltip = "[SelectLocalization( VariableSystem.Exists('show_hide_daedric_princes'), 'show_daedric_princes', 'hide_daedric_princes' )]"
-											using = tooltip_nw
-											onclick = "[VariableSystem.Toggle('show_hide_daedric_princes')]"
-
-											texture = "gfx/interface/buttons/button_tree_expand.dds"
-											frame = "[Select_int32( VariableSystem.Exists('show_hide_daedric_princes'), '(int32)1', '(int32)2' )]"
-											mirror = horizontal
-
-											oversound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_pointer_over"
-											clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
-										}
-									}
-
-									fixedgridbox = {
-										name = "doctrines_grid_daedric_princes"
-										visible = "[Not(VariableSystem.Exists('show_hide_daedric_princes'))]"
-										datamodel = "[FaithCreationWindow.GetGroupingHelper( 'daedric_princes' ).GetGrouping]"
-
-										flipdirection = yes
-										addcolumn = 270
-										addrow = 65
-										datamodel_wrap = 2
-
-										item = {
-											widget_doctrine_selection_item = {}
-										}
-									}
-								}
+								### EK ADDITION: Added our Daedric Princes group
+								ek_daedra_selection = { }
 
 								### EK EDIT: Added our Virtues & Sins group
-								vbox = {
-									layoutpolicy_horizontal = expanding
-									spacing = 10
-
-									hbox = {
-										layoutpolicy_horizontal = expanding
-										#margin_right = 15
-										text_label_left = {
-											layoutpolicy_horizontal = expanding
-											text = "FAITH_DOCTRINES_VIRTUES_SINS"
-											default_format = "#low"
-										}
-										button_expand = {
-											tooltip = "[SelectLocalization( VariableSystem.Exists('show_hide_virtues_sins'), 'show_virtues_sins', 'hide_virtues_sins' )]"
-											using = tooltip_nw
-											onclick = "[VariableSystem.Toggle('show_hide_virtues_sins')]"
-
-											texture = "gfx/interface/buttons/button_tree_expand.dds"
-											frame = "[Select_int32( VariableSystem.Exists('show_hide_virtues_sins'), '(int32)1', '(int32)2' )]"
-											mirror = horizontal
-
-											oversound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_pointer_over"
-											clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_icon_select"
-										}
-									}
-
-									fixedgridbox = {
-										name = "doctrines_grid_virtues_sins"
-										visible = "[Not(VariableSystem.Exists('show_hide_virtues_sins'))]"
-										datamodel = "[FaithCreationWindow.GetGroupingHelper( 'virtues_sins' ).GetGrouping]"
-
-										flipdirection = yes
-										addcolumn = 270
-										addrow = 65
-										datamodel_wrap = 2
-
-										item = {
-											widget_doctrine_selection_item = {}
-										}
-									}
-								}
+								ek_virtue_sin_selection = { }
 							}
 						}
 					}
@@ -805,7 +511,7 @@ window = {
 							}
 						}
 
-						#vbox = { this part of the faith creation GUI was lying to players, uncomment if able to extract the actual value
+						#vbox = { # EK DISABLED, EK TODO: this part of the faith creation GUI was lying to players, uncomment if able to extract the actual value
 						#	name = "old_faith_tolerance"
 						#	layoutpolicy_horizontal = expanding
 						
@@ -868,8 +574,7 @@ window = {
 
 						vbox = {
 							name = "pagan_reformation"
-							### EK EDIT: We don't use the Western African Pagan religion
-							visible = "[GetPlayer.GetFaith.HasDoctrineByKey('unreformed_faith_doctrine')]"
+							visible = "[Or( GetPlayer.GetFaith.HasDoctrineByKey( 'unreformed_faith_doctrine' ) , GetPlayer.GetFaith.HasDoctrineByKey( 'west_african_unreformed_faith_doctrine' ) )]"
 							layoutpolicy_horizontal = expanding
 
 							text_single = {
@@ -1124,8 +829,8 @@ window = {
 							blockoverride "editbox_properties"
 							{
 								name = "faith_name_edit"
-							    ontextedited = "[FaithCreationWindow.OnEditName]"
-							    maxcharacters = 30
+								ontextedited = "[FaithCreationWindow.OnEditName]"
+								maxcharacters = 30
 							}
 						}
 
@@ -1142,8 +847,8 @@ window = {
 							blockoverride "editbox_properties"
 							{
 								name = "faith_adjective_edit"
-							    ontextedited = "[FaithCreationWindow.OnEditAdjective]"
-							    maxcharacters = 30
+								ontextedited = "[FaithCreationWindow.OnEditAdjective]"
+								maxcharacters = 30
 							}
 
 						}
@@ -1161,8 +866,8 @@ window = {
 							blockoverride "editbox_properties"
 							{
 								name = "faith_adherent_edit"
-							    ontextedited = "[FaithCreationWindow.OnEditAdherent]"
-							    maxcharacters = 30
+								ontextedited = "[FaithCreationWindow.OnEditAdherent]"
+								maxcharacters = 30
 							}
 						}
 
@@ -1176,11 +881,11 @@ window = {
 								text = "FAITH_CREATION_NAMING_FOLLOWERS"
 							}
 
-							blockoverride "editbox_properties" 
+							blockoverride "editbox_properties"
 							{
 								name = "faith_adherent_plural_edit"
-							    ontextedited = "[FaithCreationWindow.OnEditAdherentPlural]"
-							    maxcharacters = 30
+								ontextedited = "[FaithCreationWindow.OnEditAdherentPlural]"
+								maxcharacters = 30
 							}
 						}
 
@@ -1199,15 +904,15 @@ window = {
 								text = "FAITH_CREATION_NAMING_DESC"
 							}
 
-							blockoverride "editbox_properties" 
+							blockoverride "editbox_properties"
 							{
 								name = "faith_desc_edit"
 								multiline = yes
 								ontextedited = "[FaithCreationWindow.OnEditDescription]"
 								maxcharacters = 240
 							}
-						}							
-						
+						}
+
 
 					}
 
@@ -1525,7 +1230,7 @@ template faith_window_trait_tooltip
 			hbox = {
 				margin_right = 5
 				margin_top = 5
-				
+
 				icon = {
 					size = { 52 52 }
 					texture = "[Trait.GetIcon( GetPlayer )]"

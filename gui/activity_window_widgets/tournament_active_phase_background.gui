@@ -1,3 +1,4 @@
+# EK ADDITION: added arcane clash
 widget = {
 	name = "tournament_active_phase_background"
 	size = { 100% 100% }
@@ -49,7 +50,7 @@ widget = {
 		visible = "[IsContestType( 'tournament_phase_ceremony' )]"
 	}
 
-	# Ek EDIT: added arcane clash
+	# EK ADDITION: added arcane clash
 	background = {
 		texture = "gfx/interface/illustrations/activity_backgrounds/contest_bg_arcane_clash.dds"
 		

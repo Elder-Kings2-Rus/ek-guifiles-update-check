@@ -1,9 +1,10 @@
 ######################################################
 ################### LIFESTYLES #######################
 ######################################################
-
+# EK ADDITION: account for new lifestyles
 window = {
 	name = "character_lifestyle_window"
+	widgetid = "character_lifestyle_window"
 	size = { 100% 100% }
 	parentanchor = center|hcenter
 	#	position = { 80 20 }
@@ -676,7 +677,7 @@ window = {
 									alpha = 0.4
 								}
 
-
+								# EK ADDITION: new lifestyles
 								background = {
 									visible = "[EqualTo_string( Lifestyle.GetKey, 'magic_lifestyle' )]"
 									texture = "gfx/interface/progressbars/progress_standard.dds"
@@ -688,6 +689,7 @@ window = {
 									texture = "gfx/interface/progressbars/progress_standard.dds"
 									alpha = 0.4
 								}
+								#EK ADDITION END
 
 
 								vbox = {
@@ -900,7 +902,8 @@ window = {
 									tooltip = "LIFESTYLE_XP_TOOLTIP"
 									using = tooltip_below
 								}
-
+								
+								# EK ADDITION: new lifestyles
 								progressbar_standard = {
 									parentanchor = vcenter
 									size = { 500 20 }
@@ -932,6 +935,7 @@ window = {
 									tooltip = "LIFESTYLE_XP_TOOLTIP"
 									using = tooltip_below
 								}
+								#EK ADDITION END
 
 								text_single = {
 									parentanchor = right

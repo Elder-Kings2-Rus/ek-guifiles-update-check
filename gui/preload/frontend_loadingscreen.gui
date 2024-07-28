@@ -1,3 +1,4 @@
+# EK ADDITION: add load bars (idk why)
 ### This GUI cannot use types or templates from other files, as they have not been loaded yet.
 
 widget = {
@@ -16,7 +17,8 @@ types LoadingScreen
 			texture = "[GetCurrentLoadingScreen]"
 			fittype = centercrop
 		}
-
+		
+		# EK ADDITION: add load bars
 		icon = { #top bar
 			texture = "gfx/interface/illustrations/loading_bars/load_bars.dds"
 			parentanchor = top|hcenter
@@ -54,7 +56,8 @@ types LoadingScreen
 					framesize = { 88 88 }
 					loopinterval = 1.5
 					max = 0
-
+					
+					# EK ADDITION: swap CK3 -> EK2 icon
 					icon = {
 						parentanchor =  center
 						texture = "gfx/interface/frontend/main_logo_small.dds"

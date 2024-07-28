@@ -1,3 +1,4 @@
+# EK EDIT: Account for Arcana
 window = {
 	name = "artifact_details_view"
 	size = { 1000 60% }
@@ -332,6 +333,7 @@ window = {
 						margin = { 20 0 }
 
 						text_multi = {
+							# EK EDIT: Account for Arcana
 							#text = "[Artifact.GetModifierEffects]"
 							raw_text = "[Artifact.GetModifierEffects][AddTextIf( Artifact.MakeScope.Var('arcana_modifier').IsSet, Localize('artifact_arcana_modifier') )][AddTextIf( Artifact.MakeScope.Var('magicka_modifier_flat').IsSet, Localize('artifact_magicka_modifier_flat') )][AddTextIf( Artifact.MakeScope.Var('magicka_modifier_mult').IsSet, Localize('artifact_magicka_modifier_mult') )][AddTextIf( Artifact.MakeScope.Var('necromancy_spell_cost_modifier').IsSet, Localize('artifact_necromancy_spell_cost_modifier') )][AddTextIf( Artifact.MakeScope.Var('bloodworm_helmet_effect').IsSet, Localize('bloodworm_helmet_effect') )][AddTextIf( Artifact.MakeScope.Var('staff_worms_effect').IsSet, Localize('staff_worms_effect') )]"
 							margin_bottom = 10

@@ -1,5 +1,5 @@
 ### TITLE WINDOW
-## EK EDIT: edit to expand GUI in faith view displaying which faiths a HoF is HoF for
+## EK ADDITION: edit to expand GUI in faith view displaying which faiths a HoF is HoF for
 window = {
 	name = "title_view_window"
 	movable = no
@@ -584,7 +584,7 @@ window = {
 
 						hbox = {
 							layoutpolicy_horizontal = expanding
-							tooltip = "[TitleViewWindow.GetMinimumDeJureDetailedText]"
+							tooltip = "[TitleViewWindow.GetMinimumDeJureTooltip]"
 
 							icon = {
 								name = "icon_yes"
@@ -660,7 +660,7 @@ window = {
 					}
 
 					text_single = {
-						text = "[TitleViewWindow.GetPrestigeGainText]"
+						text = "[TitleViewWindow.GetGainText]"
 					}
 
 					button_primary = {
@@ -950,7 +950,7 @@ types Title
 			text = "TV_TIER_INFO"
 		}
 
-		text_multi = { #EK EDIT: text_single set to text_multi, added min_width. Should resolve UI overflow from many faiths sharing HoF
+		text_multi = { #EK ADDITION: text_single set to text_multi, added min_width. Should resolve UI overflow from many faiths sharing HoF
 			layoutpolicy_horizontal = expanding
 			visible = "[Not(Title.CanHaveClaim)]"
 			text = "[Title.GetSpecialDescription]"

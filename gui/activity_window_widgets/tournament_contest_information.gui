@@ -1,4 +1,4 @@
-# Ek EDIT: Added new entries for the arcane clash
+# EK ADDITION: Added new entries for the arcane clash
 
 window = {
 	name = "tournament_contest_information"
@@ -277,7 +277,7 @@ types TournamentContestInformationTypes
 								onclick = "[Activity.AddCharacterToPhaseSubset(PlannedActivityPhase.Self, GetPlayer, 'spectator')]"
 								onclick = "[Activity.RemoveCharacterFromPhaseSubset(PlannedActivityPhase.Self, GetPlayer, 'contestant')]"
 
-								tooltip_enabled = "[Or( And( Not( IsMartialContest ), IsPlayerAvailableToCompeteNonMartial ), And( IsMartialContest, And( CanPlayerCompeteInMartialContest( Activity.GetHost ), IsPlayerAvailableToCompeteMartial ) ) )]"
+								tooltip_visible = "[Or( And( Not( IsMartialContest ), IsPlayerAvailableToCompeteNonMartial ), And( IsMartialContest, And( CanPlayerCompeteInMartialContest( Activity.GetHost ), IsPlayerAvailableToCompeteMartial ) ) )]"
 							}
 
 							button_contest_participate = {
@@ -288,7 +288,7 @@ types TournamentContestInformationTypes
 								onclick = "[Activity.RemoveCharacterFromPhaseSubset(PlannedActivityPhase.Self, GetPlayer, 'spectator')]"
 								onclick = "[Activity.AddCharacterToPhaseSubset(PlannedActivityPhase.Self, GetPlayer, 'contestant')]"
 								
-								tooltip_enabled = "[Or( And( Not( IsMartialContest ), IsPlayerAvailableToCompeteNonMartial ), And( IsMartialContest, And( CanPlayerCompeteInMartialContest( Activity.GetHost ), IsPlayerAvailableToCompeteMartial ) ) )]"
+								tooltip_visible = "[Or( And( Not( IsMartialContest ), IsPlayerAvailableToCompeteNonMartial ), And( IsMartialContest, And( CanPlayerCompeteInMartialContest( Activity.GetHost ), IsPlayerAvailableToCompeteMartial ) ) )]"
 							}
 
 							expand = { }
@@ -863,7 +863,8 @@ types TournamentContestInformationTypes
 						hbox_character_wit_contest_aptitude = {
 							margin = { 2 2 }
 						}
-
+						
+						# EK ADDITION: added entry for magic contest
 						hbox_character_magic_contest_aptitude = {
 							margin = { 2 2 }
 						}

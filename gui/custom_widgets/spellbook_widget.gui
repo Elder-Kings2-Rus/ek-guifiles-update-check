@@ -1810,7 +1810,7 @@ Types Spells
 						# }
 					}
 
-					# tooltip_enabled = "[DynastyView.CanSelectPerk( DynastyPerk.Self )]"
+					# tooltip_visible = "[DynastyView.CanSelectPerk( DynastyPerk.Self )]"
 					# tooltip = "UNLOCK_DYNASTY_PERK_TOOLTIP"
 					# using = tooltip_se
 				}
@@ -1892,6 +1892,7 @@ Template ButtonSpellList {
 			text = spell_name
 			layoutpolicy_horizontal = expanding
 			align = top|left
+			tooltip = spell_effect
 			block "spell_font" {
 				default_format = "#clickable"
 			}
@@ -1957,7 +1958,7 @@ Template ButtonSpellList {
 		#     }
 		# }
 		widget = {
-			size = { 40 40 }
+			size = { 65 40 } #this size allows several of the below icons to display without looking like garbage
 			visible = "[EqualTo_CFixedPoint( EmptyScope.ScriptValue(Concatenate( Scope.GetFlagName, '_province' )), '(CFixedPoint)1' )]"
 			highlight_icon = {
 				name = "spell_province_icon"
@@ -1972,7 +1973,21 @@ Template ButtonSpellList {
 			}
 		}
 		widget = {
-			size = { 40 40 }
+			size = { 65 40 }
+			visible = "[EqualTo_CFixedPoint( EmptyScope.ScriptValue(Concatenate( Scope.GetFlagName, '_secret' )), '(CFixedPoint)1' )]"
+			highlight_icon = {
+				name = "spell_secret_icon"
+				size = { 34 34 }
+				texture = "gfx/interface/icons/schemes/icon_secrecy.dds"
+				parentanchor = center
+				tooltip = spell_secret
+				block "tint_greyout" {
+					effectname = "GreyedOut"
+				}
+			}
+		}
+		widget = {
+			size = { 65 40 }
 			visible = "[EqualTo_CFixedPoint( EmptyScope.ScriptValue(Concatenate( Scope.GetFlagName, '_hostile' )), '(CFixedPoint)1' )]"
 			highlight_icon = {
 				name = "spell_hostile_icon"

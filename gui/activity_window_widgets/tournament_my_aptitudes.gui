@@ -1,3 +1,4 @@
+# EK ADDITION: Added new entries for the arcane clash
 widget = {
 	name = "tournament_my_aptitudes"
 	datacontext = "[GetPlayer]"
@@ -39,7 +40,7 @@ widget = {
 				}
 			}
 
-			#EK EDIT: remove the expand = {} if adding a new aptitude
+			#EK ADDITION: remove the expand = {} if adding a new aptitude
 			vbox = {
 				vbox_character_magic_contest_aptitude = {
 					margin = { 4 4 }

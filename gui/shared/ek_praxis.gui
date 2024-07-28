@@ -41,11 +41,11 @@
 					margin_left = 30
 
 					text_single = { #separate as it has a different format
-					name = "base"
-					layoutpolicy_horizontal = expanding
-					text = praxis_base
-					margin_bottom = -1
-				}
+						name = "base"
+						layoutpolicy_horizontal = expanding
+						text = praxis_base
+						margin_bottom = -1
+					}
 
 					item = {
 						hbox = {
@@ -67,15 +67,14 @@
 						}
 					}
 				}
-				
-			vbox = {
-				text_single = {
-					layoutpolicy_horizontal = expanding
-					text = "monthly_praxis_change_title"
-					align = left
+				vbox = {
+					text_single = {
+						layoutpolicy_horizontal = expanding
+						text = "monthly_praxis_change_title"
+						align = left
+					}
 				}
 			}
 		}
 	}
-
 }

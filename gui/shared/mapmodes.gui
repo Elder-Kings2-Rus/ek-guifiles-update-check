@@ -69,7 +69,6 @@
 		allow_outside = yes
 		filter_mouse = all
 		alwaystransparent = yes
-
 		size = { 170 95 }
 
 		background = {
@@ -79,12 +78,16 @@
 			margin_top = -12
 			margin_right = 10
 			color = { 0.15 0.15 0.15 0.75 }
+			visible = "[And(CanChangeMapMode, Not( GreaterThan_CFixedPoint( GetPlayer.MakeScope.Var('hide_ui_timeline').GetValue, '(CFixedPoint)0' ) ))]"
 		}
 
+		@zoom_level_offset = -40
+
 		flowcontainer = {
-			visible = "[And( And( Not( GetVariableSystem.Exists( 'mapmodes_expand' ) ), IsMapMode('realms') ), IsDefaultGUIMode )]"
+			name = "paper_map"
+			visible = "[And(And( And( Not( GetVariableSystem.Exists( 'mapmodes_expand' ) ), IsMapMode('realms') ), IsDefaultGUIMode ), Not( GreaterThan_CFixedPoint( GetPlayer.MakeScope.Var('hide_ui_map_zoom').GetValue, '(CFixedPoint)0' ) ))]"
 			parentanchor = top|right
-			position = { 0 -40 }
+			position = { 0 @zoom_level_offset }
 			direction = vertical
 			ignoreinvisible = yes
 			min_width = 170
@@ -122,9 +125,10 @@
 		}
 
 		flowcontainer = {
-			visible = "[And( And( Not( GetVariableSystem.Exists( 'mapmodes_expand' ) ), IsMapMode('realms') ), IsDefaultGUIMode )]"
+			name = "political_map"
+			visible = "[And(And( And( Not( GetVariableSystem.Exists( 'mapmodes_expand' ) ), IsMapMode('realms') ), IsDefaultGUIMode ), Not( GreaterThan_CFixedPoint( GetPlayer.MakeScope.Var('hide_ui_map_zoom').GetValue, '(CFixedPoint)0' ) ))]"
 			parentanchor = top|right
-			position = { 0 -40 }
+			position = { 0 @zoom_level_offset }
 			direction = vertical
 			ignoreinvisible = yes
 			min_width = 170
@@ -162,9 +166,10 @@
 		}
 
 		flowcontainer = {
-			visible = "[And( And(Not(GetVariableSystem.Exists( 'mapmodes_expand' )), IsMapMode('realms')), IsDefaultGUIMode )]"
+			name = "details_map"
+			visible = "[And(And( And(Not(GetVariableSystem.Exists( 'mapmodes_expand' )), IsMapMode('realms')), IsDefaultGUIMode ), Not( GreaterThan_CFixedPoint( GetPlayer.MakeScope.Var('hide_ui_map_zoom').GetValue, '(CFixedPoint)0' ) ))]"
 			parentanchor = top|right
-			position = { 0 -40 }
+			position = { 0 @zoom_level_offset }
 			direction = vertical
 			ignoreinvisible = yes
 			min_width = 170
@@ -206,7 +211,7 @@
 			name = "map_mode_realms_button"
 			position = { 0 25 }
 			size = { 50 50 }
-			visible = "[CanChangeMapMode]"
+			visible = "[And(CanChangeMapMode, Not( GreaterThan_CFixedPoint( GetPlayer.MakeScope.Var('hide_ui_timeline').GetValue, '(CFixedPoint)0' ) ))]"
 
 			blockoverride 'mm_datacontext'
 			{
@@ -238,6 +243,7 @@
 			parentanchor = right|bottom
 			margin_right = 15
 			direction = vertical
+			visible = "[And(CanChangeMapMode, Not( GreaterThan_CFixedPoint( GetPlayer.MakeScope.Var('hide_ui_timeline').GetValue, '(CFixedPoint)0' ) ))]"
 
 			## De Jure
 			flowcontainer = {
@@ -315,7 +321,7 @@
 				ignoreinvisible = no
 				spacing = -2
 
-				visible = "[CanChangeMapMode]"
+				visible = "[And(CanChangeMapMode, Not( GreaterThan_CFixedPoint( GetPlayer.MakeScope.Var('hide_ui_timeline').GetValue, '(CFixedPoint)0' ) ))]"
 
 				icon_button_mapmode = {
 					name = "map_mode_religion_button"
@@ -460,11 +466,13 @@
 
 		flowcontainer = {
 			direction = vertical
-			margin = { 10 5 }
+			margin = { 10 10 }
+			margin_top = 5
 			ignoreinvisible = yes
 
 			background = {
 				using = Background_Area_Dark
+				color = { 0.15 0.15 0.15 0.75 }
 			}
 
 			text_single = {
@@ -472,14 +480,15 @@
 				text = "ADDITIONAL_MAPMODES"
 				default_format = "#medium"
 				margin_bottom = 5
-				max_width = 110
+				max_width = 130
 			}
 
 			block "mapmodes_insert_before"
 			{
 					
 			}
-
+			
+			#EK ADDITION
 			button_tertiary = { 
 				parentanchor = hcenter
 				size = { 159 25 }
@@ -512,6 +521,7 @@
 					alwaystransparent = yes
 				}
 			}
+			#EK ADDITION END
 
 			mm_text_button = {
 				name = "map_mode_government_button"
@@ -521,7 +531,6 @@
 				}
 				shortcut = "map_mode_5"
 			}
-
 
 			mm_text_button = {
 				name = "map_mode_court_languages_button"
@@ -534,6 +543,28 @@
 					visible = "[And( HasDlcFeature( 'royal_court' ), CanChangeMapMode )]"
 				}
 				shortcut = "map_mode_7"
+			}
+
+			mm_text_button = {
+				name = "map_mode_epidemics_button"
+				blockoverride 'datacontext'
+				{
+					datacontext = "[GetMapMode( 'epidemics' )]"
+				}
+				shortcut = "map_mode_16"
+			}
+
+			mm_text_button = {
+				name = "map_mode_legends_button"
+				blockoverride 'datacontext'
+				{
+					datacontext = "[GetMapMode( 'legends' )]"
+				}
+				blockoverride 'visible'
+				{
+					visible = "[And( HasDlcFeature( 'legends' ), CanChangeMapMode )]"
+				}
+				shortcut = "map_mode_17"
 			}
 
 			mm_text_button = {
@@ -606,11 +637,85 @@
 				shortcut = "map_mode_12"
 			}
 
-			
+			text_single = {
+                parentanchor = hcenter
+                text = "ADDITIONAL_MAP_SETTINGS"
+                default_format = "#medium"
+                margin_bottom = 5
+                max_width = 130
+            }
 
-			
+            flowcontainer = {
+                direction = vertical
+                margin = { 5 5 }
+                ignoreinvisible = yes
+                background = {
+            		using = Background_Area_Dark
+            	}
 
-			
+            	min_width = 159
+
+				button_checkbox_label = {
+					onclick = "[ToggleShowEpidemicMapGraphics]"
+					tooltip = "SETTING_SHOW_EPIDEMIC_MAP_GRAPHICS_TOOLTIP"
+
+					state = {
+						name = _show
+						using = Animation_FadeIn_Standard
+					}
+
+					state = {
+						name = _hide
+						using = Animation_FadeOut_Standard
+					}
+
+					blockoverride "checkbox"
+					{
+						checked = "[ShowEpidemicMapGraphics]"
+						size = { 20 20 }
+					}
+
+					blockoverride "text"
+					{
+						text = "SETTING_SHOW_EPIDEMIC_MAP_GRAPHICS"
+						min_width = 120
+						max_width = 125
+						fontsize = 14
+						max_height = 18
+					}
+				}
+
+				button_checkbox_label = {
+	                onclick = "[ToggleShowLegendMapGraphics]"
+	                tooltip = "SETTING_SHOW_LEGEND_MAP_GRAPHICS_TOOLTIP"
+	                visible = "[HasDlcFeature( 'legends' )]"
+
+	                state = {
+	                    name = _show
+	                    using = Animation_FadeIn_Standard
+	                }
+
+	                state = {
+	                    name = _hide
+	                    using = Animation_FadeOut_Standard
+	                }
+
+	                blockoverride "checkbox"
+	                {
+	                    checked = "[ShowLegendMapGraphics]"
+	                    size = { 20 20 }
+	                }
+
+	                blockoverride "text"
+	                {
+	                    text = "SETTING_SHOW_LEGEND_MAP_GRAPHICS"
+	                    min_width = 120
+	                    max_width = 125
+	                    fontsize = 14
+                        max_height = 18
+	                }
+	            }
+            }
 		}
 	}
 

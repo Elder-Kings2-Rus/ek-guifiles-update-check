@@ -1,3 +1,4 @@
+# EK DISABLED: Vanilla dev portrait heads (probably not necessary but idk)
 margin_widget = {
     name = "JominiCreditsWindow"
     parentanchor = vcenter|hcenter

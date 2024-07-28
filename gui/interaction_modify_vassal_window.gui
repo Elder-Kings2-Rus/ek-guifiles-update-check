@@ -1,3 +1,4 @@
+# EK Addition: account for EK govs
 window = {
 	name = "modify_vassal_contract_interaction_window"
 	parentanchor = center
@@ -97,7 +98,7 @@ window = {
 				layoutpolicy_vertical = expanding
 				spacing = 10
 
-				### EK EDIT: Added Ceremoniarchy as a placeholder, to remove once it has its own features
+				### EK ADDITION: Added Ceremoniarchy as a placeholder, to remove once it has its own features
 				# Vbox for Feudal Contract
 				vbox = {
 					name = "paper_contract"
@@ -109,7 +110,6 @@ window = {
 					margin = { 20 20 }
 					spacing = 5
 
-					### EK NOTE: These are for the feudal contributions
 					vbox = {
 						name = "major_line_tree_levels"
 						layoutpolicy_horizontal = expanding
@@ -214,7 +214,6 @@ window = {
 						}
 					}
 
-					### EK NOTE: These are the special contract thingies (Scutage, March, ...)
 					vbox = {
 						name = "minor_list_levels_radio_buttons"
 						datamodel = "[ModifyVassalContractInteractionWindow.AccessObligationLevelRadioButtons]"
@@ -274,7 +273,6 @@ window = {
 						}
 					}
 
-					### EK NOTE: Fine print stuff (Religious rights, War Declaration, ...)
 					dynamicgridbox = {
 						name = "minor_list_levels_checkboxes"
 						flipdirection = yes
@@ -297,25 +295,14 @@ window = {
 
 								vbox = {
 									margin_left = 10
-									spacing = -2 ### EK EDIT: Inverted so it doesn't look like crap
+									spacing = 2
 
-									### EK EDIT: Added the icon and wrapped into a hbox
-									hbox = {
+									text_single = {
 										layoutpolicy_horizontal = expanding
-										text_single = {
-											layoutpolicy_horizontal = expanding
-											minimumsize = { 0 33 }
-											text = "[ObligationContainerData.GetName]"
-											using = Font_Size_Medium
-											default_format = "#light_background"
-										}
-										text_single = {
-											text = "[ObligationContainerData.GetIcon]"
-											using = Font_Size_Medium
-											default_format = "#light_background"
-											tooltip = "OPTION_FAVORS_WHO"
-											margin_right = 3
-										}
+										minimumsize = { 0 33 }
+										text = "[ObligationContainerData.GetName]"
+										using = Font_Size_Medium
+										default_format = "#light_background"
 									}
 
 									hbox = {
@@ -354,7 +341,6 @@ window = {
 						}
 					}
 
-					### EK NOTE: Liege and vassal name + emblem
 					hbox = {
 						layoutpolicy_horizontal = expanding
 						spacing = 5
@@ -417,7 +403,7 @@ window = {
 					}
 				}
 
-				### EK EDIT: Ceremoniarchy shouldn't use that, to readd once it has its own features
+				### EK ADDITION: Ceremoniarchy shouldn't use that, to readd once it has its own features
 				# Vbox for other government contract #CPAT this section needs to be checked for ek specific clauses
 				vbox = {
 					name = "lambda_vassal_paper_contract"
@@ -429,16 +415,19 @@ window = {
 					margin = { 20 20 }
 					spacing = 5
 
-					### EK EDIT: Vassal contributions + Special contract
-					vbox =  {						
-						### EK EDIT: Remade to have the radio buttons wrap after a while
+					vbox =  {
+						layoutpolicy_vertical = expanding
+
 						vbox = {
 							name = "lambda_vassal_minor_list_levels_radio_buttons"
 							datamodel = "[ModifyVassalContractInteractionWindow.AccessObligationLevelRadioButtons]"
+							visible = "[Not(Character.GetPrimaryTitle.IsBarony)]" #EK EDIT: removed IsCounty check
 
 							background = {
-								using = Background_Area
+								using = Background_Area_With_Header
 								alpha = 0.75
+								margin_left = 20
+								margin_right = 20
 								margin_bottom = 0
 								margin_top = 2
 							}
@@ -448,27 +437,10 @@ window = {
 									datacontext = "[ObligationLevelRadioButtons.GetContainerData]"
 									visible = "[ObligationContainerData.ShouldShow( ModifyVassalContractInteractionWindow.GetContractPreview )]"
 
-									vbox = {
-										background = {
-											using = Background_Area_Dark
-											alpha = 0.75
-											margin_bottom = 5
-											margin_top = 2
-										}
-										
-										layoutpolicy_horizontal = expanding
-										
-										text_single = {
-											text = "[ObligationContainerData.GetName] [ObligationContainerData.GetIcon]"
-											using = Font_Size_Medium
-											default_format = "#light_background"
-										}
-										text_single = {
-											layoutpolicy_horizontal = expanding
-											text = "[ObligationContainerData.GetIcon]"
-											using = Font_Size_Medium
-											default_format = "#light_background"
-										}
+									text_single = {
+										text = "[ObligationContainerData.GetName]"
+										using = Font_Size_Medium
+										default_format = "#light_background"
 									}
 
 									hbox = {
@@ -891,7 +863,7 @@ window = {
 						align = nobaseline
 						using = Font_Size_Medium
 
-						tooltip_enabled = "[ValueBreakdown.HasTooltip]"
+						tooltip_visible = "[ValueBreakdown.HasTooltip]"
 
 						tooltipwidget = {
 							widget_value_breakdown_tooltip = {}

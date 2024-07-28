@@ -1,4 +1,4 @@
-#2 lines edit (108, 450) - calendar
+#EK EDIT: 2 lines edit (108, 450) - calendar
 window = {
 	name = "mainmenu_mp_game_setup"
 	size = { 100% 100% }
@@ -105,7 +105,7 @@ window = {
 									onclick = "[MpBookmarkItem.Select]"
 									onclick = "[PdxGuiTriggerAllAnimations('loadsave_refresh')]"
 									down = "[MpBookmarkItem.IsSelected]"
-									text = frontend_mp_game_setup_date_replace #EK ADDED
+									text = frontend_mp_game_setup_date_replace #EK EDIT
 								}
 							}
 						}
@@ -447,7 +447,7 @@ window = {
 							layoutpolicy_horizontal = expanding
 							align = center|nobaseline
 							margin = { 0 5 }
-							text = frontend_mp_game_setup_bookmark_date_replace #EK ADDED
+							text = frontend_mp_game_setup_bookmark_date_replace #EK EDIT
 							default_format = "#low"
 						}
 
