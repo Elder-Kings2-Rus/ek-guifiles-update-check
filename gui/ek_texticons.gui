@@ -601,6 +601,16 @@ texticon = {
 }
 
 texticon = {
+	icon = nixhound_riders_icon
+	iconsize = {
+		texture = "gfx/interface/icons/regimenttypes/nixhound_riders.dds"
+		size = { 25 25 }
+		offset = { 0 3 }
+		fontsize = 16
+	}
+}
+
+texticon = {
 	icon = inspiration_icon
 	iconsize = {
 		texture = "gfx/interface/icons/inspirations/_default.dds"
