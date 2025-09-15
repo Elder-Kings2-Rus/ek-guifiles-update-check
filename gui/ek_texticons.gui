@@ -191,16 +191,6 @@ texticon = {
 }
 
 texticon = {
-	icon = equestrian_brigade_icon
-	iconsize = {
-		texture = "gfx/interface/icons/regimenttypes/equestrian_brigade.dds"
-		size = { 25 25 }
-		offset = { 0 3 }
-		fontsize = 16
-	}
-}
-
-texticon = {
 	icon = welkynar_knights_icon
 	iconsize = {
 		texture = "gfx/interface/icons/regimenttypes/welkynar_knights.dds"
